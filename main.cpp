@@ -1,22 +1,22 @@
 /* Programm to solve quadratic equation */
 
 #include <stdio.h>
-#include "Prototypes.h"
+#include <math.h>
+#include "ComputationalFunc.h"
 
 int main(void) 
 {
-    double a, b, c;      // ratios of quadratic equation
+    double a = NAN, b = NAN, c = NAN;      // ratios of quadratic equation
+    int Mode = 0;
+    double* Ans;
 
-    printf("Enter a b c ratios of quadratic equation\n");
-    while (1)
+    if (ConsoleInput(&a, &b, &c) == 3)
     {
-        if (scanf("%lf %lf %lf", &a, &b, &c) != 3)
-            printf("Please enter digital data\n");
-        else
-            break;
-        ScipInput();
+        Ans = SolvingQuadraticEquation(a, b, c, &Mode);
+        ConsoleOutput(Ans, Mode);
     }
-        SolvingQuadraticEquation(a, b, c);
+    else
+        printf("Try number is exceeded\n");
 
     printf("Programm done!\n");
 }
