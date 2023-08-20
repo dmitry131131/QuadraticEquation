@@ -16,7 +16,8 @@ enum ErrorHandling {
     EXCEEDED_INPUT_LIMIT = 1,
     COEFFICIENTS_NOT_NUMBER = 2,
     ANSWERS_NOT_NUMBER = 3,
-    FOUND_EOF_STDIN = 4
+    FOUND_EOF_STDIN = 4,
+    OUTPUT_ERROR = 5
 };
     
 double* SolvingQuadraticEquation(double a, double b, double c, OutputMode* Mode);         // solving finction prototype

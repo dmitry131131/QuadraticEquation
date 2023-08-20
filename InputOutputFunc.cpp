@@ -68,7 +68,7 @@ void ConsoleOutput(double* Out, OutputMode Mode)
         printf("%-11.4lf %.4lf\n", Out[0], -Out[1]);
     }
     else
-        printf("Output error!\n");
+        ErrorCode = OUTPUT_ERROR;
 }
 
 void ProgrammEnding()
@@ -94,7 +94,10 @@ void ProgrammEnding()
     case FOUND_EOF_STDIN:
         printf("Found EOF in stdin flow\n");
         break;
-
+    case OUTPUT_ERROR:
+        printf("Output error!\n");
+        break;
+    
     default:
         break;
     }
