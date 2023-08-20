@@ -4,6 +4,8 @@
 #include <math.h>
 #include "ComputationalFunc.h"
 
+ErrorHandling ErrorCode = NO_ERRORS;
+
 int main() 
 {
     double a = NAN, b = NAN, c = NAN;      // coefficient of quadratic equation
@@ -15,16 +17,16 @@ int main()
         if (IsFinite(a) && IsFinite(b) && IsFinite(c))
             Answers = SolvingQuadraticEquation(a, b, c, &OutputMode);
         else
-            printf("Coefficients not a number or infinity!\n");
+            ErrorCode = COEFFICIENTS_NOT_NUMBER;
 
         if (IsFinite(Answers[0]) && IsFinite(Answers[1]))
             ConsoleOutput(Answers, OutputMode);
         else
-            printf("Answers are not a numbers or infinity!\n");
+            ErrorCode = ANSWERS_NOT_NUMBER;
     }
     else
-        printf("Try number is exceeded\n");
+        ErrorCode = EXCEEDED_INPUT_LIMIT;
 
-    printf("Programm done!\n");
+    ProgrammEnding();
     return 0;
 }

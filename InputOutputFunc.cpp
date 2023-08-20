@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "ComputationalFunc.h"
 
+extern ErrorHandling ErrorCode;
+
 void ScipInput()
 {
     while ((getchar()) != '\n') {}
@@ -11,14 +13,17 @@ int ConsoleInput(double* a, double* b, double* c)
 {
     int log = 0;
     printf("Enter a b c ratios of quadratic equation\n");
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < MAX_INPUT_COUNT; i++)
     {
         log = scanf("%lf %lf %lf", a, b, c);
 
         if (log == 3) return 3;
 
         if (log == EOF) 
-            printf("Input error!\n");
+            {
+                ErrorCode = FOUND_EOF_STDIN;
+                break;
+            }
 
         printf("Please enter digital data\n");
         ScipInput();
@@ -64,4 +69,33 @@ void ConsoleOutput(double* Out, OutputMode Mode)
     }
     else
         printf("Output error!\n");
+}
+
+void ProgrammEnding()
+{
+    switch (ErrorCode)
+    {
+    case NO_ERRORS:
+        printf("Programm done successfully!\n");
+        break;
+
+    case COEFFICIENTS_NOT_NUMBER:
+        printf("Coefficients not a number or infinity!\n");
+        break;
+
+    case ANSWERS_NOT_NUMBER:
+        printf("Answers are not a numbers or infinity!\n");
+        break;
+    
+    case EXCEEDED_INPUT_LIMIT:
+        printf("Try number is exceeded\n");
+        break;
+
+    case FOUND_EOF_STDIN:
+        printf("Found EOF in stdin flow\n");
+        break;
+
+    default:
+        break;
+    }
 }
