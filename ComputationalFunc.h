@@ -32,4 +32,4 @@ int IsFinite(double number);   // Check nubmer is not infinity or NAN
 
 int IsZero(double number);    // Check number != 0
 
-void ProgrammEnding();
+void PrintErrorValue(ErrorHandling ErrorCode);  // Print Error value to stdout

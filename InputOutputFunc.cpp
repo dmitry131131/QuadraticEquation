@@ -1,8 +1,7 @@
 /* Input and output functions */
 #include <stdio.h>
+#include <stdlib.h>
 #include "ComputationalFunc.h"
-
-extern ErrorHandling ErrorCode;
 
 void ScipInput()
 {
@@ -21,7 +20,7 @@ int ConsoleInput(double* a, double* b, double* c)
 
         if (log == EOF) 
             {
-                ErrorCode = FOUND_EOF_STDIN;
+                PrintErrorValue(FOUND_EOF_STDIN);
                 break;
             }
 
@@ -34,68 +33,78 @@ int ConsoleInput(double* a, double* b, double* c)
 
 void ConsoleOutput(double* Out, OutputMode Mode)
 {
-    if (Mode == NOT_EQUATION)
+    switch (Mode)
     {
+    case NOT_EQUATION:
         printf("This is not equation:\n"
                "a and b ratios mustn't be 0\n");
-    }
+        break;
 
-    else if (Mode == LINERAL_EQUATION)
-    {
+    case LINERAL_EQUATION:
         printf("This is not quadratic equation\n"
                "But solution of linear equation is: %.4lf\n", Out[0]);
-    }
+        break;
 
-    else if (Mode == ONE_REAL_SOLUTION)
-    {
+    case ONE_REAL_SOLUTION:
         printf("Equation has one real solution\n");
         printf("Solution is: %.4lf\n", Out[0]);
-    }
+        break;
 
-    else if (Mode == TWO_REAL_SOLUTIONS)
-    {
+    case TWO_REAL_SOLUTIONS:
         printf("Equation has two real solution\n");
-        printf("First solution: %.4lf\n", Out[0]);
-        printf("Second solution: %.4lf\n", Out[1]);
-    }
+        printf("First solution: %.4lf\n", Out[0] + Out[1]);
+        printf("Second solution: %.4lf\n", Out[0] - Out[1]);
+        break;
 
-    else if (Mode == TWO_COMPLEX_SOLUTONS)
-    {
+    case TWO_COMPLEX_SOLUTONS:
         printf("Equation has not got real solution\n"
                "Complex solutions:\n"
                "Real part   Imaginary part\n");
         printf("%-11.4lf %.4lf\n", Out[0], Out[1]);
         printf("%-11.4lf %.4lf\n", Out[0], -Out[1]);
+        break;
+    
+    case ERROR:
+        PrintErrorValue(OUTPUT_ERROR);
+        break;
+
+    default:
+        PrintErrorValue(OUTPUT_ERROR);
+        break;
     }
-    else
-        ErrorCode = OUTPUT_ERROR;
 }
 
-void ProgrammEnding()
+void PrintErrorValue(ErrorHandling ErrorCode)
 {
     switch (ErrorCode)
     {
     case NO_ERRORS:
         printf("Programm done successfully!\n");
+        exit(EXIT_SUCCESS);
         break;
 
     case COEFFICIENTS_NOT_NUMBER:
         printf("Coefficients not a number or infinity!\n");
+        exit(EXIT_FAILURE);
         break;
 
     case ANSWERS_NOT_NUMBER:
         printf("Answers are not a numbers or infinity!\n");
+        exit(EXIT_FAILURE);
         break;
     
     case EXCEEDED_INPUT_LIMIT:
         printf("Try number is exceeded\n");
+        exit(EXIT_FAILURE);
         break;
 
     case FOUND_EOF_STDIN:
         printf("Found EOF in stdin flow\n");
+        exit(EXIT_FAILURE);
         break;
     case OUTPUT_ERROR:
         printf("Output error!\n");
+        exit(EXIT_FAILURE);
         break;
     
     default:
