@@ -7,18 +7,18 @@
 int main() 
 {
     double a = NAN, b = NAN, c = NAN;      // coefficient of quadratic equation
-    OutputMode OutputMode = ERROR;
-    double* Answers;
+
+    struct ModeAndAnswers ModeAndAnswersData = {ERROR, {NAN, NAN}};
 
     if (ConsoleInput(&a, &b, &c) == 3)
     {
         if (!(IsFinite(a) && IsFinite(b) && IsFinite(c)))
             PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
         else
-            Answers = SolvingQuadraticEquation(a, b, c, &OutputMode);
+            SolvingQuadraticEquation(a, b, c, &ModeAndAnswersData);
 
-        if (IsFinite(Answers[0]) && IsFinite(Answers[1]))
-            ConsoleOutput(Answers, OutputMode);
+        if (IsFinite(ModeAndAnswersData.Answers[0]) && IsFinite(ModeAndAnswersData.Answers[1]))
+            ConsoleOutput(&ModeAndAnswersData);
         else
             PrintErrorValue(ANSWERS_NOT_NUMBER);
     }

@@ -19,14 +19,20 @@ enum ErrorHandling {
     FOUND_EOF_STDIN = 4,
     OUTPUT_ERROR = 5
 };
+
+struct ModeAndAnswers
+{
+    OutputMode OutputMode;
+    double Answers[2];
+};
     
-double* SolvingQuadraticEquation(double a, double b, double c, OutputMode* Mode);         // solving finction prototype
+void SolvingQuadraticEquation(double a, double b, double c, struct ModeAndAnswers* );         // solving finction prototype
 
 void ScipInput();  //Scip trash symbols from stdin flow
 
 int ConsoleInput(double*, double*, double*);  //  Console input of 3 double number
 
-void ConsoleOutput(double* Out, OutputMode Mode);  // Console Output 
+void ConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData);  // Console Output 
 
 int IsFinite(double number);   // Check nubmer is not infinity or NAN
 

@@ -4,10 +4,9 @@
 #include "ComputationalFunc.h"
 
 /* solving quadratic equation function */
-double* SolvingQuadraticEquation(double a, double b, double c, OutputMode* OutputMode)
+void SolvingQuadraticEquation(double a, double b, double c, struct ModeAndAnswers* ModeAndAnswersData)
 {
-    double D = NAN;     // Discriminant
-    static double Answers[] = {NAN, NAN};    
+    double D = NAN;     // Discriminant  
 
     if (!IsZero(a))
     {
@@ -15,40 +14,38 @@ double* SolvingQuadraticEquation(double a, double b, double c, OutputMode* Outpu
         if (D < 0)
         {
             /* Two complex solutions */
-            *OutputMode = TWO_COMPLEX_SOLUTONS;
-            Answers[0] = (-b)/(2*a);
-            Answers[1] = sqrt(-D)/(2*a);
+            ModeAndAnswersData->OutputMode = TWO_COMPLEX_SOLUTONS;
+            ModeAndAnswersData->Answers[0] = (-b)/(2*a);
+            ModeAndAnswersData->Answers[1] = sqrt(-D)/(2*a);
         }
         else if (D > 0)
         {
             /* Two real solutions */
-            *OutputMode = TWO_REAL_SOLUTIONS;
-            Answers[0] = (-b)/(2*a);
-            Answers[1] = (sqrt(D)) / (2 * a);
+            ModeAndAnswersData->OutputMode = TWO_REAL_SOLUTIONS;
+            ModeAndAnswersData->Answers[0] = (-b)/(2*a);
+            ModeAndAnswersData->Answers[1] = (sqrt(D)) / (2 * a);
         }
         else
         {
             /* One real solution */
-            *OutputMode = ONE_REAL_SOLUTION;
-            Answers[0] = Answers[1] = (-b + (sqrt(D))) / (2 * a);
+            ModeAndAnswersData->OutputMode = ONE_REAL_SOLUTION;
+            ModeAndAnswersData->Answers[0] = ModeAndAnswersData->Answers[1] = (-b + (sqrt(D))) / (2 * a);
         }
     }
 
     else if (!IsZero(b))
     {
         /* Lineral equation */
-        *OutputMode = LINERAL_EQUATION;
-        Answers[0] = Answers[1] = (-c)/b;
+        ModeAndAnswersData->OutputMode = LINERAL_EQUATION;
+        ModeAndAnswersData->Answers[0] = ModeAndAnswersData->Answers[1] = (-c)/b;
     }
 
     else
     {
         /* Not equation */
-        *OutputMode = NOT_EQUATION;
-        Answers[0] = Answers[1] = 0;
+        ModeAndAnswersData->OutputMode = NOT_EQUATION;
+        ModeAndAnswersData->Answers[0] = ModeAndAnswersData->Answers[1] = 0;
     }
-
-    return Answers;
 }
 
 int IsFinite(double number)

@@ -31,9 +31,9 @@ int ConsoleInput(double* a, double* b, double* c)
     return 0;
 }
 
-void ConsoleOutput(double* Out, OutputMode Mode)
+void ConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData)
 {
-    switch (Mode)
+    switch (ModeAndAnswersData->OutputMode)
     {
     case NOT_EQUATION:
         printf("This is not equation:\n"
@@ -42,26 +42,26 @@ void ConsoleOutput(double* Out, OutputMode Mode)
 
     case LINERAL_EQUATION:
         printf("This is not quadratic equation\n"
-               "But solution of linear equation is: %.4lf\n", Out[0]);
+               "But solution of linear equation is: %.4lf\n", ModeAndAnswersData->Answers[0]);
         break;
 
     case ONE_REAL_SOLUTION:
         printf("Equation has one real solution\n");
-        printf("Solution is: %.4lf\n", Out[0]);
+        printf("Solution is: %.4lf\n", ModeAndAnswersData->Answers[0]);
         break;
 
     case TWO_REAL_SOLUTIONS:
         printf("Equation has two real solution\n");
-        printf("First solution: %.4lf\n", Out[0] + Out[1]);
-        printf("Second solution: %.4lf\n", Out[0] - Out[1]);
+        printf("First solution: %.4lf\n", ModeAndAnswersData->Answers[0] + ModeAndAnswersData->Answers[1]);
+        printf("Second solution: %.4lf\n", ModeAndAnswersData->Answers[0] - ModeAndAnswersData->Answers[1]);
         break;
 
     case TWO_COMPLEX_SOLUTONS:
         printf("Equation has not got real solution\n"
                "Complex solutions:\n"
                "Real part   Imaginary part\n");
-        printf("%-11.4lf %.4lf\n", Out[0], Out[1]);
-        printf("%-11.4lf %.4lf\n", Out[0], -Out[1]);
+        printf("%-11.4lf %.4lf\n", ModeAndAnswersData->Answers[0], ModeAndAnswersData->Answers[1]);
+        printf("%-11.4lf %.4lf\n", ModeAndAnswersData->Answers[0], -(ModeAndAnswersData->Answers[1]));
         break;
     
     case ERROR:
