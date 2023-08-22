@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     
     /* Mode with console input and console output */
     case 1:
-        if (ConsoleInput(&a, &b, &c) == 3)
+        if (!ConsoleInput(&a, &b, &c))
         {
             if (!(IsFinite(a) && IsFinite(b) && IsFinite(c)))
                 PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
@@ -29,8 +29,6 @@ int main(int argc, char* argv[])
             else
                 PrintErrorValue(ANSWERS_NOT_NUMBER);
         }
-        else
-            PrintErrorValue(EXCEEDED_INPUT_LIMIT);
         break;
     
     /* Mode with file input and console output */
@@ -123,21 +121,21 @@ int main(int argc, char* argv[])
                     else
                         SolvingQuadraticEquation(a, b, c, &ModeAndAnswersData);
 
-                    if (IsFinite(ModeAndAnswersData.Answers[0]) && IsFinite(ModeAndAnswersData.Answers[1]))
+                    double Ans[2] = {0, 0};
+                    fscanf(file, "%lf %lf", &Ans[0], &Ans[1]);
+                    ScipInput(file);
+
+                    if (!(EqualityNumbers(ModeAndAnswersData.Answers[0], Ans[0]) && EqualityNumbers(ModeAndAnswersData.Answers[1], Ans[1])))
                     {
-                        double Ans[2] = {0, 0};
-                        fscanf(file, "%lf %lf", &Ans[0], &Ans[1]);
-                        ScipInput(file);
-                        if (!(EqualityNumbers(ModeAndAnswersData.Answers[0], Ans[0]) && EqualityNumbers(ModeAndAnswersData.Answers[1], Ans[1])))
-                        {
-                            printf("Unit test error in line %d of %s\n", count, argv[1]);
-                            printf("Test values are: %lf %lf\n", Ans[0], Ans[1]);
-                            printf("Programm values are: %lf %lf\n", ModeAndAnswersData.Answers[0], ModeAndAnswersData.Answers[1]);
-                            flag = false;
-                        }
+                        printf("Unit test error in line %d of %s\n", count, argv[1]);
+                        printf("Test values are: %lf %lf\n", Ans[0], Ans[1]);
+                        printf("Programm values are: %lf %lf\n", ModeAndAnswersData.Answers[0], ModeAndAnswersData.Answers[1]);
+                        flag = false;
                     }
+                    
                     count++;
                 }
+
                 if (flag)
                 {
                     printf("Unit test successfull!!!\n");

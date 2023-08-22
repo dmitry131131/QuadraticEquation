@@ -36,11 +36,11 @@ void SolvingQuadraticEquation(double a, double b, double c, struct ModeAndAnswer
 
 void ScipInput(FILE* flow);  //Scip trash symbols from stdin flow
 
-int ConsoleInput(double*, double*, double*);  //  Console input of 3 double number
+enum ErrorHandling ConsoleInput(double*, double*, double*);  //  Console input of 3 double number
 
-int FileInput(double* a, double* b, double* c, FILE* file); // File input of 3 number
+enum ErrorHandling FileInput(double* a, double* b, double* c, FILE* file); // File input of 3 number
 
-void ConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData);  // Console Output 
+enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData);  // Console Output 
 
 int IsFinite(double number);   // Check nubmer is not infinity or NAN
 

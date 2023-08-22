@@ -8,7 +8,7 @@ void ScipInput(FILE* flow)
     while ((getc(flow)) != '\n') {}
 }
 
-int ConsoleInput(double* a, double* b, double* c)
+enum ErrorHandling ConsoleInput(double* a, double* b, double* c)
 {
     int log = 0;
     printf("Enter a b c ratios of quadratic equation\n");
@@ -16,11 +16,12 @@ int ConsoleInput(double* a, double* b, double* c)
     {
         log = scanf("%lf %lf %lf", a, b, c);
 
-        if (log == 3) return 3;
+        if (log == 3) return NO_ERRORS;
 
         if (log == EOF)
             {
                 PrintErrorValue(FOUND_EOF_STDIN);
+                return FOUND_EOF_STDIN;
                 break;
             }
 
@@ -28,10 +29,11 @@ int ConsoleInput(double* a, double* b, double* c)
         ScipInput(stdin);
     }
 
-    return 0;
+    PrintErrorValue(EXCEEDED_INPUT_LIMIT);
+    return EXCEEDED_INPUT_LIMIT;
 }
 
-void ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData)
+enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData)
 {
     switch (ModeAndAnswersData->OutputMode)
     {
@@ -66,12 +68,16 @@ void ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData)
 
     case ERROR:
         PrintErrorValue(OUTPUT_ERROR);
+        return OUTPUT_ERROR;
         break;
 
     default:
         PrintErrorValue(OUTPUT_ERROR);
+        return OUTPUT_ERROR;
         break;
     }
+
+    return NO_ERRORS;
 }
 
 void PrintErrorValue(ErrorHandling ErrorCode)
@@ -131,21 +137,21 @@ void PrintErrorValue(ErrorHandling ErrorCode)
     }
 }
 
-int FileInput(double* a, double* b, double* c, FILE* file)
+enum ErrorHandling FileInput(double* a, double* b, double* c, FILE* file)
 {
     int log = fscanf(file, "%lf %lf %lf", a, b, c);
     if (log == 3)
     {  
-        return 3;
+        return NO_ERRORS;
     }
     else if (log == EOF)
     {
         PrintErrorValue(FOUND_EOF_FILE);
-        return 0;
+        return FOUND_EOF_FILE;
     }
     else
     {
         PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
-        return 0;
+        return COEFFICIENTS_NOT_NUMBER;
     }
 }
