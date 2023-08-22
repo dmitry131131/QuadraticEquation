@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include "ComputationalFunc.h"
 
-void ScipInput()
+void ScipInput(FILE* flow)
 {
-    while ((getchar()) != '\n') {}
+    while ((getc(flow)) != '\n') {}
 }
 
 int ConsoleInput(double* a, double* b, double* c)
@@ -18,20 +18,20 @@ int ConsoleInput(double* a, double* b, double* c)
 
         if (log == 3) return 3;
 
-        if (log == EOF) 
+        if (log == EOF)
             {
                 PrintErrorValue(FOUND_EOF_STDIN);
                 break;
             }
 
         printf("Please enter digital data\n");
-        ScipInput();
+        ScipInput(stdin);
     }
 
     return 0;
 }
 
-void ConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData)
+void ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData)
 {
     switch (ModeAndAnswersData->OutputMode)
     {
@@ -63,7 +63,7 @@ void ConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData)
         printf("%-11.4lf %.4lf\n", ModeAndAnswersData->Answers[0], ModeAndAnswersData->Answers[1]);
         printf("%-11.4lf %.4lf\n", ModeAndAnswersData->Answers[0], -(ModeAndAnswersData->Answers[1]));
         break;
-    
+
     case ERROR:
         PrintErrorValue(OUTPUT_ERROR);
         break;
@@ -85,29 +85,63 @@ void PrintErrorValue(ErrorHandling ErrorCode)
 
     case COEFFICIENTS_NOT_NUMBER:
         printf("Coefficients not a number or infinity!\n");
-        exit(EXIT_FAILURE);
         break;
 
     case ANSWERS_NOT_NUMBER:
         printf("Answers are not a numbers or infinity!\n");
-        exit(EXIT_FAILURE);
         break;
-    
+
     case EXCEEDED_INPUT_LIMIT:
         printf("Try number is exceeded\n");
-        exit(EXIT_FAILURE);
         break;
 
     case FOUND_EOF_STDIN:
         printf("Found EOF in stdin flow\n");
-        exit(EXIT_FAILURE);
         break;
+
     case OUTPUT_ERROR:
         printf("Output error!\n");
-        exit(EXIT_FAILURE);
         break;
-    
+
+    case FILE_NOT_OPENED:
+        printf("File not found\n");
+        break;
+
+    case FILE_INPUT_ERROR:
+        printf("Invalid data in file!\n");
+        break;
+
+    case FOUND_EOF_FILE:
+        printf("Found EOF in file!\n");
+        break;
+
+    case CLOSE_FILE_ERROR:
+        printf("Can't close file!\n");
+        break;
+
+    case TOO_MANY_CONSOLE_ARG:
+        printf("Too many arguments in console\n");
+        break;
+
+    case INVALID_CONSOLE_ARG:
+        printf("Invalid third argument!\n");
+        break;
+
     default:
         break;
+    }
+}
+
+int FileInput(double* a, double* b, double* c, FILE* file)
+{
+    int log = fscanf(file, "%lf %lf %lf", a, b, c);
+    if (log == 3)
+    {  
+        return 3;
+    }
+    else
+    {
+        PrintErrorValue(FOUND_EOF_FILE);
+        return 0;
     }
 }

@@ -17,7 +17,13 @@ enum ErrorHandling {
     COEFFICIENTS_NOT_NUMBER = 2,
     ANSWERS_NOT_NUMBER = 3,
     FOUND_EOF_STDIN = 4,
-    OUTPUT_ERROR = 5
+    OUTPUT_ERROR = 5,
+    FILE_NOT_OPENED = 6,
+    FILE_INPUT_ERROR = 7,
+    FOUND_EOF_FILE = 8,
+    CLOSE_FILE_ERROR = 9,
+    TOO_MANY_CONSOLE_ARG = 10,
+    INVALID_CONSOLE_ARG = 11
 };
 
 struct ModeAndAnswers
@@ -28,9 +34,11 @@ struct ModeAndAnswers
     
 void SolvingQuadraticEquation(double a, double b, double c, struct ModeAndAnswers* );         // solving finction prototype
 
-void ScipInput();  //Scip trash symbols from stdin flow
+void ScipInput(FILE* flow);  //Scip trash symbols from stdin flow
 
 int ConsoleInput(double*, double*, double*);  //  Console input of 3 double number
+
+int FileInput(double* a, double* b, double* c, FILE* file); // File input of 3 number
 
 void ConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData);  // Console Output 
 
@@ -38,4 +46,16 @@ int IsFinite(double number);   // Check nubmer is not infinity or NAN
 
 int IsZero(double number);    // Check number != 0
 
+int EqualityNumbers(const double a, const double b); // a == b
+
 void PrintErrorValue(ErrorHandling ErrorCode);  // Print Error value to stdout
+
+void TwoComplexSolutions(double a, double b, double D, struct ModeAndAnswers* ModeAndAnswersData); // Two complex solutions 
+
+void TwoRealSolutions(const double a, const double b, const double D, struct ModeAndAnswers* ModeAndAnswersData);  // Two real solutions
+
+void OneRealSolution(const double a, const double b, const double D, struct ModeAndAnswers* ModeAndAnswersData); // One real solution
+
+void LineralEquation(const double b, const double c, struct ModeAndAnswers* ModeAndAnswersData); // Lineral equation
+
+void NotEquation(struct ModeAndAnswers* ModeAndAnswersData); // Not equation
