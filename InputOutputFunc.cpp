@@ -80,7 +80,6 @@ void PrintErrorValue(ErrorHandling ErrorCode)
     {
     case NO_ERRORS:
         printf("Programm done successfully!\n");
-        exit(EXIT_SUCCESS);
         break;
 
     case COEFFICIENTS_NOT_NUMBER:
@@ -139,9 +138,14 @@ int FileInput(double* a, double* b, double* c, FILE* file)
     {  
         return 3;
     }
-    else
+    else if (log == EOF)
     {
         PrintErrorValue(FOUND_EOF_FILE);
+        return 0;
+    }
+    else
+    {
+        PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
         return 0;
     }
 }

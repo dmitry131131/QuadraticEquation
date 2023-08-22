@@ -1,5 +1,5 @@
 /* Prototypes and preprocessor dirictives */
-#define MIN_DOUBLE_VALUE 0.000001
+#define MIN_DOUBLE_VALUE 1.0e-6
 #define MAX_INPUT_COUNT 5
 
 enum OutputMode {
