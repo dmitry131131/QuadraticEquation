@@ -1,5 +1,5 @@
 /* Prototypes and preprocessor dirictives */
-#define MIN_DOUBLE_VALUE 1.0e-6
+#define MIN_DOUBLE_VALUE 1.0e-4
 #define MAX_INPUT_COUNT 5
 
 enum OutputMode {
@@ -29,7 +29,8 @@ enum ErrorHandling {
 struct ModeAndAnswers
 {
     OutputMode OutputMode;
-    double Answers[2];
+    double Answer1[2];
+    double Answer2[2];
 };
     
 void SolvingQuadraticEquation(double a, double b, double c, struct ModeAndAnswers* );         // solving finction prototype

@@ -44,26 +44,26 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData
 
     case LINERAL_EQUATION:
         printf("This is not quadratic equation\n"
-               "But solution of linear equation is: %.4lf\n", ModeAndAnswersData->Answers[0]);
+               "But solution of linear equation is: %.4lf\n", ModeAndAnswersData->Answer1[0]);
         break;
 
     case ONE_REAL_SOLUTION:
         printf("Equation has one real solution\n");
-        printf("Solution is: %.4lf\n", ModeAndAnswersData->Answers[0]);
+        printf("Solution is: %.4lf\n", ModeAndAnswersData->Answer1[0]);
         break;
 
     case TWO_REAL_SOLUTIONS:
         printf("Equation has two real solution\n");
-        printf("First solution: %.4lf\n", ModeAndAnswersData->Answers[0] + ModeAndAnswersData->Answers[1]);
-        printf("Second solution: %.4lf\n", ModeAndAnswersData->Answers[0] - ModeAndAnswersData->Answers[1]);
+        printf("First solution: %.4lf\n", ModeAndAnswersData->Answer1[0]);
+        printf("Second solution: %.4lf\n", ModeAndAnswersData->Answer2[0]);
         break;
 
     case TWO_COMPLEX_SOLUTONS:
         printf("Equation has not got real solution\n"
                "Complex solutions:\n"
                "Real part   Imaginary part\n");
-        printf("%-11.4lf %.4lf\n", ModeAndAnswersData->Answers[0], ModeAndAnswersData->Answers[1]);
-        printf("%-11.4lf %.4lf\n", ModeAndAnswersData->Answers[0], -(ModeAndAnswersData->Answers[1]));
+        printf("%-11.4lf %.4lf\n", ModeAndAnswersData->Answer1[0], ModeAndAnswersData->Answer1[1]);
+        printf("%-11.4lf %.4lf\n", ModeAndAnswersData->Answer2[0], ModeAndAnswersData->Answer2[1]);
         break;
 
     case ERROR:

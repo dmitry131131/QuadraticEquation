@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 {
     double a = NAN, b = NAN, c = NAN;      // coefficient of quadratic equation
 
-    struct ModeAndAnswers ModeAndAnswersData = {ERROR, {NAN, NAN}};
+    struct ModeAndAnswers ModeAndAnswersData = {ERROR, {NAN, NAN}, {NAN, NAN}};
 
     switch (argc)
     {
@@ -24,7 +24,8 @@ int main(int argc, char* argv[])
             else
                 SolvingQuadraticEquation(a, b, c, &ModeAndAnswersData);
 
-            if (IsFinite(ModeAndAnswersData.Answers[0]) && IsFinite(ModeAndAnswersData.Answers[1]))
+            if (IsFinite(ModeAndAnswersData.Answer1[0]) && IsFinite(ModeAndAnswersData.Answer1[1])
+            && IsFinite(ModeAndAnswersData.Answer2[0]) && IsFinite(ModeAndAnswersData.Answer2[1]))
                 ConsoleOutput(&ModeAndAnswersData);
             else
                 PrintErrorValue(ANSWERS_NOT_NUMBER);
@@ -35,7 +36,7 @@ int main(int argc, char* argv[])
     case 2:
         if (!strcmp(argv[1], "--help"))
         {
-            printf("Baza!\n");
+            printf("Base!\n");
         }
         else
         {
@@ -53,7 +54,8 @@ int main(int argc, char* argv[])
                     else
                         SolvingQuadraticEquation(a, b, c, &ModeAndAnswersData);
 
-                    if (IsFinite(ModeAndAnswersData.Answers[0]) && IsFinite(ModeAndAnswersData.Answers[1]))
+                    if (IsFinite(ModeAndAnswersData.Answer1[0]) && IsFinite(ModeAndAnswersData.Answer1[1])
+                    && IsFinite(ModeAndAnswersData.Answer2[0]) && IsFinite(ModeAndAnswersData.Answer2[1]))
                         ConsoleOutput(&ModeAndAnswersData);
                     else
                         PrintErrorValue(ANSWERS_NOT_NUMBER);
@@ -88,7 +90,8 @@ int main(int argc, char* argv[])
                     else
                         SolvingQuadraticEquation(a, b, c, &ModeAndAnswersData);
 
-                    if (IsFinite(ModeAndAnswersData.Answers[0]) && IsFinite(ModeAndAnswersData.Answers[1]))
+                    if (IsFinite(ModeAndAnswersData.Answer1[0]) && IsFinite(ModeAndAnswersData.Answer1[1])
+                    && IsFinite(ModeAndAnswersData.Answer2[0]) && IsFinite(ModeAndAnswersData.Answer2[1]))
                         ConsoleOutput(&ModeAndAnswersData);
                     else
                         PrintErrorValue(ANSWERS_NOT_NUMBER);
@@ -121,15 +124,21 @@ int main(int argc, char* argv[])
                     else
                         SolvingQuadraticEquation(a, b, c, &ModeAndAnswersData);
 
-                    double Ans[2] = {0, 0};
-                    fscanf(file, "%lf %lf", &Ans[0], &Ans[1]);
+                    double Ans1[2] = {0, 0}, Ans2[2] = {0, 0};
+                    fscanf(file, "%lf %lf %lf %lf", &Ans1[0], &Ans1[1], &Ans2[0], &Ans2[1]);
                     ScipInput(file);
 
-                    if (!(EqualityNumbers(ModeAndAnswersData.Answers[0], Ans[0]) && EqualityNumbers(ModeAndAnswersData.Answers[1], Ans[1])))
+                    if (!(EqualityNumbers(ModeAndAnswersData.Answer1[0], Ans1[0])
+                    && EqualityNumbers(ModeAndAnswersData.Answer1[1], Ans1[1])
+                    && EqualityNumbers(ModeAndAnswersData.Answer2[0], Ans2[0])
+                    && EqualityNumbers(ModeAndAnswersData.Answer2[1], Ans2[1])))
                     {
                         printf("Unit test error in line %d of %s\n", count, argv[1]);
-                        printf("Test values are: %lf %lf\n", Ans[0], Ans[1]);
-                        printf("Programm values are: %lf %lf\n", ModeAndAnswersData.Answers[0], ModeAndAnswersData.Answers[1]);
+                        printf("Test values are: real: %.4lf complex: %.4lf\n real: %.4lf complex: %.4lf\n\n",
+                        Ans1[0], Ans1[1], Ans2[0], Ans2[1]);
+                        printf("Test values are: real: %.4lf complex: %.4lf\n real: %.4lf complex: %.4lf\n\n",
+                        ModeAndAnswersData.Answer1[0], ModeAndAnswersData.Answer1[1],
+                        ModeAndAnswersData.Answer2[0], ModeAndAnswersData.Answer2[1]);
                         flag = false;
                     }
                     

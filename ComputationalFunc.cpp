@@ -59,31 +59,35 @@ int EqualityNumbers(const double a, const double b)
 void TwoComplexSolutions(const double a, const double b, const double D, struct ModeAndAnswers* ModeAndAnswersData)
 {
     ModeAndAnswersData->OutputMode = TWO_COMPLEX_SOLUTONS;
-    ModeAndAnswersData->Answers[0] = (-b)/(2*a);
-    ModeAndAnswersData->Answers[1] = sqrt(-D)/(2*a);
+    ModeAndAnswersData->Answer1[0] = ModeAndAnswersData->Answer2[0] = (-b)/(2*a);
+    ModeAndAnswersData->Answer1[1] = sqrt(-D)/(2*a);
+    ModeAndAnswersData->Answer2[1] = -(sqrt(-D)/(2*a));
 }
 
 void TwoRealSolutions(const double a, const double b, const double D, struct ModeAndAnswers* ModeAndAnswersData)
 {
     ModeAndAnswersData->OutputMode = TWO_REAL_SOLUTIONS;
-    ModeAndAnswersData->Answers[0] = (-b)/(2*a);
-    ModeAndAnswersData->Answers[1] = (sqrt(D)) / (2 * a);
+    ModeAndAnswersData->Answer1[0] = (-b)/(2*a) + (sqrt(D)) / (2 * a);
+    ModeAndAnswersData->Answer2[0] = (-b)/(2*a) - (sqrt(D)) / (2 * a);
+    ModeAndAnswersData->Answer1[1] = ModeAndAnswersData->Answer2[1] = 0;
 }
 
 void OneRealSolution(const double a, const double b, const double D, struct ModeAndAnswers* ModeAndAnswersData)
 {
     ModeAndAnswersData->OutputMode = ONE_REAL_SOLUTION;
-    ModeAndAnswersData->Answers[0] = ModeAndAnswersData->Answers[1] = (-b + (sqrt(D))) / (2 * a);
+    ModeAndAnswersData->Answer1[0] = ModeAndAnswersData->Answer2[0] = (-b + (sqrt(D))) / (2 * a);
+    ModeAndAnswersData->Answer1[1] = ModeAndAnswersData->Answer2[1] = 0;
 }
 
 void LineralEquation(const double b, const double c, struct ModeAndAnswers* ModeAndAnswersData)
 {
     ModeAndAnswersData->OutputMode = LINERAL_EQUATION;
-    ModeAndAnswersData->Answers[0] = ModeAndAnswersData->Answers[1] = (-c)/b;
+    ModeAndAnswersData->Answer1[0] = ModeAndAnswersData->Answer2[0] = (-c)/b;
+    ModeAndAnswersData->Answer1[1] = ModeAndAnswersData->Answer2[1] = 0;
 }
 
 void NotEquation(struct ModeAndAnswers* ModeAndAnswersData)
 {
     ModeAndAnswersData->OutputMode = NOT_EQUATION;
-    ModeAndAnswersData->Answers[0] = ModeAndAnswersData->Answers[1] = 0;
+    ModeAndAnswersData->Answer1[0] = ModeAndAnswersData->Answer2[0] = ModeAndAnswersData->Answer1[1] = ModeAndAnswersData->Answer2[1] = 0;
 }
