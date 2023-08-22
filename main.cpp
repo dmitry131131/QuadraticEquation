@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     case 2:
         if (!strcmp(argv[1], "--help"))
         {
-            printf("Base!\n");
+            HelpOutput();
         }
         else
         {
@@ -104,6 +104,7 @@ int main(int argc, char* argv[])
                 if (fclose(file) == EOF)
                     PrintErrorValue(CLOSE_FILE_ERROR);
             }
+            
         }
 
         else if (!strcmp(argv[2], "t"))

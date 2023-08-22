@@ -1,6 +1,10 @@
+#ifndef COMPUTANIONAL_FUNC_H
+#define COMPUTANIONAL_FUNC_H
+
+// TODO: const
 /* Prototypes and preprocessor dirictives */
-#define MIN_DOUBLE_VALUE 1.0e-4
-#define MAX_INPUT_COUNT 5
+const double MIN_DOUBLE_VALUE = 1.0e-4;
+const int MAX_INPUT_COUNT = 5;
 
 enum OutputMode {
     ERROR = 0,
@@ -60,3 +64,7 @@ void OneRealSolution(const double a, const double b, const double D, struct Mode
 void LineralEquation(const double b, const double c, struct ModeAndAnswers* ModeAndAnswersData); // Lineral equation
 
 void NotEquation(struct ModeAndAnswers* ModeAndAnswersData); // Not equation
+
+void HelpOutput(); // Print help information about programm
+
+#endif // COMPUTANIONAL_FUNC_H
