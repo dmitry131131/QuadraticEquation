@@ -1,8 +1,12 @@
-/* Programm to solve quadratic equation */
-
+/**
+ * @file
+ * @brief main file
+*/
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include "StructAndEnums.h"
+#include "InputOutputFunc.h"
 #include "ComputationalFunc.h"
 
 

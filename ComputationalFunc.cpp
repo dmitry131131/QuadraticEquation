@@ -1,6 +1,10 @@
-/* Computational functions file */
+/**
+ * @file
+ * @brief Sourse file of computational functions
+*/
 #include <stdio.h>
 #include <math.h>
+#include "StructAndEnums.h"
 #include "ComputationalFunc.h"
 
 /* solving quadratic equation function */

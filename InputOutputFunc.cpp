@@ -1,6 +1,11 @@
-/* Input and output functions */
+/**
+ * @file
+ * @brief Sourse file with input/output functions
+*/
 #include <stdio.h>
 #include <stdlib.h>
+#include "StructAndEnums.h"
+#include "InputOutputFunc.h"
 #include "ComputationalFunc.h"
 
 void ScipInput(FILE* flow)
@@ -67,13 +72,13 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData
         break;
 
     case ERROR:
-        PrintErrorValue(OUTPUT_ERROR);
-        return OUTPUT_ERROR;
+        PrintErrorValue(CONSOLE_OUTPUT_ERROR);
+        return CONSOLE_OUTPUT_ERROR;
         break;
 
     default:
-        PrintErrorValue(OUTPUT_ERROR);
-        return OUTPUT_ERROR;
+        PrintErrorValue(CONSOLE_OUTPUT_ERROR);
+        return CONSOLE_OUTPUT_ERROR;
         break;
     }
 
@@ -104,7 +109,7 @@ void PrintErrorValue(ErrorHandling ErrorCode)
         printf("Found EOF in stdin flow\n\n");
         break;
 
-    case OUTPUT_ERROR:
+    case CONSOLE_OUTPUT_ERROR:
         printf("Output error!\n\n");
         break;
 

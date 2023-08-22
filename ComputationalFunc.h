@@ -1,70 +1,73 @@
+/**
+ * @file
+ * @brief Prototypes and preprocessor dirictives file 
+ * 
+ * In this file prototypes of computational functions
+*/
 #ifndef COMPUTANIONAL_FUNC_H
 #define COMPUTANIONAL_FUNC_H
-
-// TODO: const
-/* Prototypes and preprocessor dirictives */
-const double MIN_DOUBLE_VALUE = 1.0e-4;
-const int MAX_INPUT_COUNT = 5;
-
-enum OutputMode {
-    ERROR = 0,
-    NOT_EQUATION = 1,
-    LINERAL_EQUATION = 2,
-    ONE_REAL_SOLUTION = 3,
-    TWO_REAL_SOLUTIONS = 4,
-    TWO_COMPLEX_SOLUTONS = 5
-};
-
-enum ErrorHandling {
-    NO_ERRORS = 0,
-    EXCEEDED_INPUT_LIMIT = 1,
-    COEFFICIENTS_NOT_NUMBER = 2,
-    ANSWERS_NOT_NUMBER = 3,
-    FOUND_EOF_STDIN = 4,
-    OUTPUT_ERROR = 5,
-    FILE_NOT_OPENED = 6,
-    FILE_INPUT_ERROR = 7,
-    FOUND_EOF_FILE = 8,
-    CLOSE_FILE_ERROR = 9,
-    TOO_MANY_CONSOLE_ARG = 10,
-    INVALID_CONSOLE_ARG = 11
-};
-
-struct ModeAndAnswers
-{
-    OutputMode OutputMode;
-    double Answer1[2];
-    double Answer2[2];
-};
-    
-void SolvingQuadraticEquation(double a, double b, double c, struct ModeAndAnswers* );         // solving finction prototype
-
-void ScipInput(FILE* flow);  //Scip trash symbols from stdin flow
-
-enum ErrorHandling ConsoleInput(double*, double*, double*);  //  Console input of 3 double number
-
-enum ErrorHandling FileInput(double* a, double* b, double* c, FILE* file); // File input of 3 number
-
-enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData);  // Console Output 
-
-int IsFinite(double number);   // Check nubmer is not infinity or NAN
-
-int IsZero(double number);    // Check number != 0
-
+/**
+ * Solving finction prototype
+ * @param [in] a first coefficient of quadratic equation
+ * @param [in] b second coefficient of quadratic equation
+ * @param [in] c third coefficient of quadratic equation
+ * @param [out] ModeAndAnswersData output data structure
+*/
+void SolvingQuadraticEquation(const double a, const double b, const double c, struct ModeAndAnswers* ModeAndAnswersData);
+/**
+ * Check nubmer is not infinity or NAN
+ * @param [in] number checked value
+ * @return True if number is finite and False if number is infinity
+*/
+int IsFinite(const double number);
+/**
+ * Check number != 0
+ * @param [in] number checked value
+ * @return True if number is zero and False if number is not zero
+*/
+int IsZero(const double number);
+/**
+ * Compare two numbers
+ * @param [in] a first number
+ * @param [in] b second number
+ * @return True if a == b of False if a != b
+*/
 int EqualityNumbers(const double a, const double b); // a == b
-
-void PrintErrorValue(ErrorHandling ErrorCode);  // Print Error value to stdout
-
+/**
+ * Returns two complex solutions
+ * @param [in] a first coefficient of quadratic equation
+ * @param [in] b second coefficient of quadratic equation
+ * @param [in] D discriminant of quadratic equation
+ * @param [out] ModeAndAnswersData output data structure
+*/
 void TwoComplexSolutions(double a, double b, double D, struct ModeAndAnswers* ModeAndAnswersData); // Two complex solutions 
-
-void TwoRealSolutions(const double a, const double b, const double D, struct ModeAndAnswers* ModeAndAnswersData);  // Two real solutions
-
-void OneRealSolution(const double a, const double b, const double D, struct ModeAndAnswers* ModeAndAnswersData); // One real solution
-
+/**
+ * Returns two real solutions
+ * @param [in] a first coefficient of quadratic equation
+ * @param [in] b second coefficient of quadratic equation
+ * @param [in] D discriminant of quadratic equation
+ * @param [out] ModeAndAnswersData output data structure
+*/
+void TwoRealSolutions(const double a, const double b, const double D, struct ModeAndAnswers* ModeAndAnswersData); 
+/**
+ * Returns one real solution
+ * @param [in] a first coefficient of quadratic equation
+ * @param [in] b second coefficient of quadratic equation
+ * @param [in] D discriminant of quadratic equation
+ * @param [out] ModeAndAnswersData output data structure
+*/
+void OneRealSolution(const double a, const double b, const double D, struct ModeAndAnswers* ModeAndAnswersData);
+/**
+ * Returns solution of lineral equation
+ * @param [in] b second coefficient of quadratic equation
+ * @param [in] c third coefficient of quadratic equation
+ * @param [out] ModeAndAnswersData output data structure
+*/
 void LineralEquation(const double b, const double c, struct ModeAndAnswers* ModeAndAnswersData); // Lineral equation
-
-void NotEquation(struct ModeAndAnswers* ModeAndAnswersData); // Not equation
-
-void HelpOutput(); // Print help information about programm
+/** 
+ * Returns data in case not equation
+ * @param [out] ModeAndAnswersData output data structure
+*/
+void NotEquation(struct ModeAndAnswers* ModeAndAnswersData);
 
 #endif // COMPUTANIONAL_FUNC_H
