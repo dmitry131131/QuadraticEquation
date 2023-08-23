@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
             FILE* file = fopen(argv[1], "r");
             if (file == NULL)
             {
-                PrintErrorValue(FILE_NOT_OPENED);
+                PrintErrorValue(FILE_NOT_OPENED, __func__);
             }
             else
             {
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
             FILE* file = fopen(argv[1], "r");
             if (file == NULL)
             {
-                PrintErrorValue(FILE_NOT_OPENED);
+                PrintErrorValue(FILE_NOT_OPENED, __func__);
             }
             else
             {
@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
             FILE* file = fopen(argv[1], "r");
             if (file == NULL)
             {
-                PrintErrorValue(FILE_NOT_OPENED);
+                PrintErrorValue(FILE_NOT_OPENED, __func__);
             }
             else
             {
@@ -74,12 +74,12 @@ int main(int argc, char* argv[])
 
         else
         {
-            PrintErrorValue(INVALID_CONSOLE_ARG);
+            PrintErrorValue(INVALID_CONSOLE_ARG, __func__);
         }
         break;
 
     default:
-        PrintErrorValue(TOO_MANY_CONSOLE_ARG);
+        PrintErrorValue(TOO_MANY_CONSOLE_ARG, __func__);
         break;
     }
 

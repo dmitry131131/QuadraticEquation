@@ -37,7 +37,7 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData);
  * Print Error value to stdout
  * @param [in] ErrorCode code of error (enum ErrorHandling)
 */
-void PrintErrorValue(ErrorHandling ErrorCode); 
+void PrintErrorValue(ErrorHandling ErrorCode, const char* file); 
 /**
  * Print help information about programm
 */

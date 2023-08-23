@@ -17,7 +17,7 @@ enum ErrorHandling ConsoleInputConsoleOutput(double* a, double* b, double*c, str
         {
             if (!(IsFinite(*a) && IsFinite(*b) && IsFinite(*c)))
             {
-                PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
+                PrintErrorValue(COEFFICIENTS_NOT_NUMBER, __func__);
                 return COEFFICIENTS_NOT_NUMBER;
             }
             else
@@ -32,7 +32,7 @@ enum ErrorHandling ConsoleInputConsoleOutput(double* a, double* b, double*c, str
             }
             else
             {
-                PrintErrorValue(ANSWERS_NOT_NUMBER);
+                PrintErrorValue(ANSWERS_NOT_NUMBER, __func__);
                 return ANSWERS_NOT_NUMBER;
             }
         }
@@ -45,7 +45,7 @@ enum ErrorHandling FileOneInputConsoleOutput(double* a, double* b, double* c, st
     {
         if (!(IsFinite(*a) && IsFinite(*b) && IsFinite(*c)))
         {
-            PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
+            PrintErrorValue(COEFFICIENTS_NOT_NUMBER, __func__);
             return COEFFICIENTS_NOT_NUMBER;
         }
         else
@@ -60,19 +60,19 @@ enum ErrorHandling FileOneInputConsoleOutput(double* a, double* b, double* c, st
         }
         else
         {
-            PrintErrorValue(ANSWERS_NOT_NUMBER);
+            PrintErrorValue(ANSWERS_NOT_NUMBER, __func__);
             return ANSWERS_NOT_NUMBER;
         }
     }
 
     else
     {  
-        PrintErrorValue(FILE_INPUT_ERROR);
+        PrintErrorValue(FILE_INPUT_ERROR, __func__);
         return FILE_INPUT_ERROR;
     }
     if (fclose(file) == EOF)
     {
-        PrintErrorValue(CLOSE_FILE_ERROR);
+        PrintErrorValue(CLOSE_FILE_ERROR, __func__);
         return CLOSE_FILE_ERROR;
     }
     return NO_ERRORS;
@@ -86,7 +86,7 @@ enum ErrorHandling FileManyInputConsoleOutput(double* a, double* b, double* c, s
         printf("%d\n", count);
         if (!(IsFinite(*a) && IsFinite(*b) && IsFinite(*c)))
         {
-            PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
+            PrintErrorValue(COEFFICIENTS_NOT_NUMBER, __func__);
             return COEFFICIENTS_NOT_NUMBER;
         }
         else
@@ -101,7 +101,7 @@ enum ErrorHandling FileManyInputConsoleOutput(double* a, double* b, double* c, s
         }
         else
         {
-            PrintErrorValue(ANSWERS_NOT_NUMBER);
+            PrintErrorValue(ANSWERS_NOT_NUMBER, __func__);
             return ANSWERS_NOT_NUMBER;
         }
                     
@@ -111,7 +111,7 @@ enum ErrorHandling FileManyInputConsoleOutput(double* a, double* b, double* c, s
                 
     if (fclose(file) == EOF)
     {
-        PrintErrorValue(CLOSE_FILE_ERROR);
+        PrintErrorValue(CLOSE_FILE_ERROR, __func__);
         return CLOSE_FILE_ERROR;
     }
     return NO_ERRORS;
@@ -125,7 +125,7 @@ enum ErrorHandling SolvingFuncUnitTest(double* a, double* b, double* c, struct M
     {
         if (!(IsFinite(*a) && IsFinite(*b) && IsFinite(*c)))
         {
-            PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
+            PrintErrorValue(COEFFICIENTS_NOT_NUMBER, __func__);
             return COEFFICIENTS_NOT_NUMBER;
         }
         else

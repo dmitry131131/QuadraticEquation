@@ -25,7 +25,7 @@ enum ErrorHandling ConsoleInput(double* a, double* b, double* c)
 
         if (log == EOF)
             {
-                PrintErrorValue(FOUND_EOF_STDIN);
+                PrintErrorValue(FOUND_EOF_STDIN, __func__);
                 return FOUND_EOF_STDIN;
                 break;
             }
@@ -34,7 +34,7 @@ enum ErrorHandling ConsoleInput(double* a, double* b, double* c)
         ScipInput(stdin);
     }
 
-    PrintErrorValue(EXCEEDED_INPUT_LIMIT);
+    PrintErrorValue(EXCEEDED_INPUT_LIMIT, __func__);
     return EXCEEDED_INPUT_LIMIT;
 }
 
@@ -72,12 +72,12 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData
         break;
 
     case ERROR:
-        PrintErrorValue(CONSOLE_OUTPUT_ERROR);
+        PrintErrorValue(CONSOLE_OUTPUT_ERROR, __func__);
         return CONSOLE_OUTPUT_ERROR;
         break;
 
     default:
-        PrintErrorValue(CONSOLE_OUTPUT_ERROR);
+        PrintErrorValue(CONSOLE_OUTPUT_ERROR, __func__);
         return CONSOLE_OUTPUT_ERROR;
         break;
     }
@@ -85,7 +85,7 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData
     return NO_ERRORS;
 }
 
-void PrintErrorValue(ErrorHandling ErrorCode)
+void PrintErrorValue(ErrorHandling ErrorCode, const char* func)
 {
     switch (ErrorCode)
     {
@@ -94,39 +94,48 @@ void PrintErrorValue(ErrorHandling ErrorCode)
         break;
 
     case COEFFICIENTS_NOT_NUMBER:
-        printf("Coefficients not a number or infinity!\n\n");
+        printf( "Coefficients not a number or infinity!\n"
+                "Function: %s\n\n", func);
         break;
 
     case ANSWERS_NOT_NUMBER:
-        printf("Answers are not a numbers or infinity!\n\n");
+        printf( "Answers are not a numbers or infinity!\n"
+                "Function: %s\n\n", func);
         break;
 
     case EXCEEDED_INPUT_LIMIT:
-        printf("Try number is exceeded\n\n");
+        printf( "Try number is exceeded!\n"
+                "Function: %s\n\n", func);
         break;
 
     case FOUND_EOF_STDIN:
-        printf("Found EOF in stdin flow\n\n");
+        printf( "Found EOF in stdin flow\n"
+                "Function: %s\n\n", func);
         break;
 
     case CONSOLE_OUTPUT_ERROR:
-        printf("Output error!\n\n");
+        printf( "Output error!\n"
+                "Function: %s\n\n", func);
         break;
 
     case FILE_NOT_OPENED:
-        printf("File not found\n\n");
+        printf( "File not found\n"
+                "Function: %s\n\n", func);
         break;
 
     case FILE_INPUT_ERROR:
-        printf("Invalid data in file!\n\n");
+        printf( "Invalid data in file!\n"
+                "Function: %s\n\n", func);
         break;
 
     case FOUND_EOF_FILE:
-        printf("Found EOF in file!\n\n");
+        printf( "Found EOF in file!\n"
+                "Function: %s\n\n", func);
         break;
 
     case CLOSE_FILE_ERROR:
-        printf("Can't close file!\n\n");
+        printf( "Can't close file!\n"
+                "Function: %s\n\n", func);
         break;
 
     case TOO_MANY_CONSOLE_ARG:
@@ -151,12 +160,12 @@ enum ErrorHandling FileInput(double* a, double* b, double* c, FILE* file)
     }
     else if (log == EOF)
     {
-        PrintErrorValue(FOUND_EOF_FILE);
+        PrintErrorValue(FOUND_EOF_FILE, __func__);
         return FOUND_EOF_FILE;
     }
     else
     {
-        PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
+        PrintErrorValue(COEFFICIENTS_NOT_NUMBER, __func__);
         return COEFFICIENTS_NOT_NUMBER;
     }
 }
