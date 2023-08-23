@@ -5,10 +5,11 @@
 #include <stdio.h>
 #include <math.h>
 #include "StructAndEnums.h"
-#include "ComputationalFunc.h"
+#include "Computational.h"
+#include "math_utilits.h"
 
 /* solving quadratic equation function */
-void SolvingQuadraticEquation(struct ModeAndAnswers* ModeAndAnswersData)
+enum ErrorHandling SolvingQuadraticEquation(struct ModeAndAnswers* ModeAndAnswersData)
 {
     double D = NAN;     // Discriminant  
 
@@ -43,56 +44,47 @@ void SolvingQuadraticEquation(struct ModeAndAnswers* ModeAndAnswersData)
         /* Not equation */
         NotEquation(ModeAndAnswersData);
     }
-}
-
-int IsFinite(const double number)
-{
-    return !isnan(number) && !isinf(number);
-}
-
-int IsZero(const double number)
-{
-    return !(fabs(number) > MIN_DOUBLE_VALUE);
-}
-
-int EqualityNumbers(const double a, const double b)
-{
-    return !(fabs(a - b) > MIN_DOUBLE_VALUE);
+    if (IsFinite(ModeAndAnswersData->Answers[0].Real) && IsFinite(ModeAndAnswersData->Answers[0].Complex)
+    && IsFinite(ModeAndAnswersData->Answers[1].Real) && IsFinite(ModeAndAnswersData->Answers[1].Complex))
+    {
+        return NO_ERRORS;
+    }
+    return ANSWERS_NOT_NUMBER;
 }
 
 void TwoComplexSolutions(const double* Coeff, const double D, struct ModeAndAnswers* ModeAndAnswersData)
 {
     ModeAndAnswersData->OutputMode = TWO_COMPLEX_SOLUTONS;
-    ModeAndAnswersData->Answers[0][0] = ModeAndAnswersData->Answers[1][0] = (-Coeff[1])/(2*Coeff[0]);
-    ModeAndAnswersData->Answers[0][1] = sqrt(-D)/(2*Coeff[0]);
-    ModeAndAnswersData->Answers[1][1] = -(sqrt(-D)/(2*Coeff[0]));
+    ModeAndAnswersData->Answers[0].Real = ModeAndAnswersData->Answers[1].Real = (-Coeff[1])/(2*Coeff[0]);
+    ModeAndAnswersData->Answers[0].Complex = sqrt(-D)/(2*Coeff[0]);
+    ModeAndAnswersData->Answers[1].Complex = -(sqrt(-D)/(2*Coeff[0]));
 }
 
 void TwoRealSolutions(const double* Coeff, const double D, struct ModeAndAnswers* ModeAndAnswersData)
 {
     ModeAndAnswersData->OutputMode = TWO_REAL_SOLUTIONS;
-    ModeAndAnswersData->Answers[0][0] = (-Coeff[1])/(2*Coeff[0]) + (sqrt(D)) / (2 * Coeff[0]);
-    ModeAndAnswersData->Answers[1][0] = (-Coeff[1])/(2*Coeff[0]) - (sqrt(D)) / (2 * Coeff[0]);
-    ModeAndAnswersData->Answers[0][1] = ModeAndAnswersData->Answers[1][1] = 0;
+    ModeAndAnswersData->Answers[0].Real = (-Coeff[1])/(2*Coeff[0]) + (sqrt(D)) / (2 * Coeff[0]);
+    ModeAndAnswersData->Answers[1].Real = (-Coeff[1])/(2*Coeff[0]) - (sqrt(D)) / (2 * Coeff[0]);
+    ModeAndAnswersData->Answers[0].Complex = ModeAndAnswersData->Answers[1].Complex = 0;
 }
 
 void OneRealSolution(const double* Coeff, const double D, struct ModeAndAnswers* ModeAndAnswersData)
 {
     ModeAndAnswersData->OutputMode = ONE_REAL_SOLUTION;
-    ModeAndAnswersData->Answers[0][0] = ModeAndAnswersData->Answers[1][0] = (-Coeff[1] + (sqrt(D))) / (2 * Coeff[0]);
-    ModeAndAnswersData->Answers[0][1] = ModeAndAnswersData->Answers[1][1] = 0;
+    ModeAndAnswersData->Answers[0].Real = ModeAndAnswersData->Answers[1].Real = (-Coeff[1] + (sqrt(D))) / (2 * Coeff[0]);
+    ModeAndAnswersData->Answers[0].Complex = ModeAndAnswersData->Answers[1].Complex = 0;
 }
 
 void LineralEquation(const double* Coeff, struct ModeAndAnswers* ModeAndAnswersData)
 {
     ModeAndAnswersData->OutputMode = LINERAL_EQUATION;
-    ModeAndAnswersData->Answers[0][0] = ModeAndAnswersData->Answers[1][0] = (-Coeff[2])/Coeff[1];
-    ModeAndAnswersData->Answers[0][1] = ModeAndAnswersData->Answers[1][1] = 0;
+    ModeAndAnswersData->Answers[0].Real = ModeAndAnswersData->Answers[1].Real = (-Coeff[2])/Coeff[1];
+    ModeAndAnswersData->Answers[0].Complex = ModeAndAnswersData->Answers[1].Complex = 0;
 }
 
 void NotEquation(struct ModeAndAnswers* ModeAndAnswersData)
 {
     ModeAndAnswersData->OutputMode = NOT_EQUATION;
-    ModeAndAnswersData->Answers[0][0] = ModeAndAnswersData->Answers[1][0]
-    = ModeAndAnswersData->Answers[0][1] = ModeAndAnswersData->Answers[1][1] = 0;
+    ModeAndAnswersData->Answers[0].Real = ModeAndAnswersData->Answers[1].Real
+    = ModeAndAnswersData->Answers[0].Complex = ModeAndAnswersData->Answers[1].Complex = 0;
 }

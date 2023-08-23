@@ -1,0 +1,15 @@
+/**
+ * @file
+ * @brief Prototypes of test functions
+*/
+
+/**
+ * @param [in] filename name of test data file
+ * @return Error code
+*/
+enum ErrorHandling Tester(const char* filename);
+/**
+ * @param [in] file File with test data
+ * @return Error Code
+*/
+enum ErrorHandling TestMode(FILE* file);

@@ -9,20 +9,13 @@
  * Scip symbols from flow until found '\n'
  * @param [in] flow filename or flow name
 */
-void ScipInput(FILE* flow);
+void SkipInput(FILE* flow);
 /**
  * Console input of 3 double number
  * @param [out] Coeff array with coefficients
  * @return Return error code or NO_ERRORS
 */
-enum ErrorHandling ConsoleInput(double* Coeff); 
-/**
- * File input of 3 number
- * @param [out] Coeff array with coefficients
- * @param [in] file name of input file
- * @return Return error code or NO_ERRORS
-*/
-enum ErrorHandling FileInput(double* Coeff, FILE* file);
+enum ErrorHandling Input(double* Coeff, FILE* file); 
 /**
  * Console Output 
  * @param [in] ModeAndAnswerData name of data struct ModeAndAnswers
@@ -32,7 +25,7 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData);
  * Print Error value to stdout
  * @param [in] ErrorCode code of error (enum ErrorHandling)
 */
-void PrintErrorValue(ErrorHandling ErrorCode, const char* file); 
+void PrintErrorValue(ErrorHandling ErrorCode); 
 /**
  * Print help information about programm
 */

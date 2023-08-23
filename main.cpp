@@ -3,83 +3,48 @@
  * @brief main file
 */
 #include <stdio.h>
-#include <math.h>
-#include <string.h>
+
+#include "config.h"
+
 #include "StructAndEnums.h"
-#include "InputOutputFunc.h"
-#include "ComputationalFunc.h"
-#include "MainFuncModes.h"
+#include "InputOutput.h"
+#include "MainMode.h"
+#include "FlagsManager.h"
+#include "Test.h"
 
 int main(int argc, char* argv[])
 {
+    enum ErrorHandling ErrorCode = NO_ERRORS;
 
-    struct ModeAndAnswers ModeAndAnswersData = {ERROR, {NAN, NAN, NAN}, {{NAN, NAN}, {NAN, NAN}}};
-
-    switch (argc)
+    #ifdef RUN_TEST
+    if((ErrorCode = Tester("test.txt")))
     {
+        printf("Test Failed!\n");
+        return 0;
+    }
     
-    /* Mode with console input and console output */
-    case 1:
-        ConsoleInputConsoleOutput(&ModeAndAnswersData);
-        break;
+    printf("Test successfull!\n\n");
     
-    /* Mode with file input and console output */
-    case 2:
-        if (!strcmp(argv[1], "--help"))
-        {
-            HelpOutput();
-        }
-        else
-        {
-            FILE* file = fopen(argv[1], "r");
-            if (file == NULL)
-            {
-                PrintErrorValue(FILE_NOT_OPENED, __func__);
-            }
-            else
-            {
-                FileOneInputConsoleOutput(&ModeAndAnswersData, file);
-            }
-        }
-        break;
-    
-    /* Mode with processing of many input values*/
-    case 3:
-        if (!strcmp(argv[2], "m"))
-        {
-            FILE* file = fopen(argv[1], "r");
-            if (file == NULL)
-            {
-                PrintErrorValue(FILE_NOT_OPENED, __func__);
-            }
-            else
-            {
-                FileManyInputConsoleOutput(&ModeAndAnswersData, file);
-            }
-        }
+    #endif
+    FlagsManager(argc, argv);
 
-        else if (!strcmp(argv[2], "t"))
+    while (1)
+    {   
+        printf("Enter a b c ratios of quadratic equation or 'q' to exit\n");
+        if ((ErrorCode = MainMode(stdin)))
         {
-            FILE* file = fopen(argv[1], "r");
-            if (file == NULL)
+            if (getchar() == 'q')
             {
-                PrintErrorValue(FILE_NOT_OPENED, __func__);
+                SkipInput(stdin);
+                return 0;
             }
-            else
+            else 
             {
-                SolvingFuncUnitTest(&ModeAndAnswersData, file, argv[1]);
+                SkipInput(stdin);
+                PrintErrorValue(ErrorCode);
             }
+        printf("Please enter digital data\n");
         }
-
-        else
-        {
-            PrintErrorValue(INVALID_CONSOLE_ARG, __func__);
-        }
-        break;
-
-    default:
-        PrintErrorValue(TOO_MANY_CONSOLE_ARG, __func__);
-        break;
     }
 
     return 0;
