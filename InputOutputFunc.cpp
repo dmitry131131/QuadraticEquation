@@ -13,13 +13,13 @@ void ScipInput(FILE* flow)
     while ((getc(flow)) != '\n') {}
 }
 
-enum ErrorHandling ConsoleInput(double* a, double* b, double* c)
+enum ErrorHandling ConsoleInput(double* Coeff)
 {
     int log = 0;
     printf("Enter a b c ratios of quadratic equation\n");
     for (int i = 0; i < MAX_INPUT_COUNT; i++)
     {
-        log = scanf("%lf %lf %lf", a, b, c);
+        log = scanf("%lf %lf %lf", &Coeff[0], &Coeff[1], &Coeff[2]);
 
         if (log == 3) return NO_ERRORS;
 
@@ -151,9 +151,9 @@ void PrintErrorValue(ErrorHandling ErrorCode, const char* func)
     }
 }
 
-enum ErrorHandling FileInput(double* a, double* b, double* c, FILE* file)
+enum ErrorHandling FileInput(double* Coeff, FILE* file)
 {
-    int log = fscanf(file, "%lf %lf %lf", a, b, c);
+    int log = fscanf(file, "%lf %lf %lf", &Coeff[0], &Coeff[1], &Coeff[2]);
     if (log == 3)
     {  
         return NO_ERRORS;

@@ -12,22 +12,17 @@
 void ScipInput(FILE* flow);
 /**
  * Console input of 3 double number
- * @param [out] a first number
- * @param [out] b second number
- * @param [out] c third number
+ * @param [out] Coeff array with coefficients
  * @return Return error code or NO_ERRORS
 */
-enum ErrorHandling ConsoleInput(double* a, double* b, double* c); 
-
+enum ErrorHandling ConsoleInput(double* Coeff); 
 /**
  * File input of 3 number
- * @param [out] a first number
- * @param [out] b second number
- * @param [out] c third number
+ * @param [out] Coeff array with coefficients
  * @param [in] file name of input file
  * @return Return error code or NO_ERRORS
 */
-enum ErrorHandling FileInput(double* a, double* b, double* c, FILE* file);
+enum ErrorHandling FileInput(double* Coeff, FILE* file);
 /**
  * Console Output 
  * @param [in] ModeAndAnswerData name of data struct ModeAndAnswers

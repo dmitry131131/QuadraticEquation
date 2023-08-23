@@ -35,10 +35,11 @@ enum ErrorHandling {
     TOO_MANY_CONSOLE_ARG = 10,      ///< User entered too many console arguments
     INVALID_CONSOLE_ARG = 11        ///< User entered invalid console arguments
 };
-/// @brief structure contains Mode of output and two roots
+/// @brief structure contains Mode of output and two roots, coefficients of equation and answers
 struct ModeAndAnswers
 {
     OutputMode OutputMode;     ///< enum OutputMode with mode of output
+    double Coeff[3];           ///< coefficients array Coeff[0] - a, Coeff[1] - b, Coeff[2] - c
     double Answer1[2];         ///< first root array Answer1[0] - real part, Answer1[1] - complex part
     double Answer2[2];         ///< first root array Answer2[0] - real part, Answer2[1] - complex part
 };

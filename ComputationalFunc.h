@@ -13,7 +13,7 @@
  * @param [in] c third coefficient of quadratic equation
  * @param [out] ModeAndAnswersData output data structure
 */
-void SolvingQuadraticEquation(const double a, const double b, const double c, struct ModeAndAnswers* ModeAndAnswersData);
+void SolvingQuadraticEquation(struct ModeAndAnswers* ModeAndAnswersData);
 /**
  * Check nubmer is not infinity or NAN
  * @param [in] number checked value
@@ -40,7 +40,7 @@ int EqualityNumbers(const double a, const double b); // a == b
  * @param [in] D discriminant of quadratic equation
  * @param [out] ModeAndAnswersData output data structure
 */
-void TwoComplexSolutions(double a, double b, double D, struct ModeAndAnswers* ModeAndAnswersData); // Two complex solutions 
+void TwoComplexSolutions(const double* Coeff, double D, struct ModeAndAnswers* ModeAndAnswersData); // Two complex solutions 
 /**
  * Returns two real solutions
  * @param [in] a first coefficient of quadratic equation
@@ -48,7 +48,7 @@ void TwoComplexSolutions(double a, double b, double D, struct ModeAndAnswers* Mo
  * @param [in] D discriminant of quadratic equation
  * @param [out] ModeAndAnswersData output data structure
 */
-void TwoRealSolutions(const double a, const double b, const double D, struct ModeAndAnswers* ModeAndAnswersData); 
+void TwoRealSolutions(const double* Coeff, const double D, struct ModeAndAnswers* ModeAndAnswersData); 
 /**
  * Returns one real solution
  * @param [in] a first coefficient of quadratic equation
@@ -56,14 +56,14 @@ void TwoRealSolutions(const double a, const double b, const double D, struct Mod
  * @param [in] D discriminant of quadratic equation
  * @param [out] ModeAndAnswersData output data structure
 */
-void OneRealSolution(const double a, const double b, const double D, struct ModeAndAnswers* ModeAndAnswersData);
+void OneRealSolution(const double* Coeff, const double D, struct ModeAndAnswers* ModeAndAnswersData);
 /**
  * Returns solution of lineral equation
  * @param [in] b second coefficient of quadratic equation
  * @param [in] c third coefficient of quadratic equation
  * @param [out] ModeAndAnswersData output data structure
 */
-void LineralEquation(const double b, const double c, struct ModeAndAnswers* ModeAndAnswersData); // Lineral equation
+void LineralEquation(const double* Coeff, struct ModeAndAnswers* ModeAndAnswersData); // Lineral equation
 /** 
  * Returns data in case not equation
  * @param [out] ModeAndAnswersData output data structure

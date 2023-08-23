@@ -11,18 +11,18 @@
 #include "ComputationalFunc.h"
 #include "MainFuncModes.h"
 
-enum ErrorHandling ConsoleInputConsoleOutput(double* a, double* b, double*c, struct ModeAndAnswers* ModeAndAnswersData)
+enum ErrorHandling ConsoleInputConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData)
 {
-    if (!ConsoleInput(a, b, c))
+    if (!ConsoleInput(ModeAndAnswersData->Coeff))
         {
-            if (!(IsFinite(*a) && IsFinite(*b) && IsFinite(*c)))
+            if (!(IsFinite(ModeAndAnswersData->Coeff[0]) && IsFinite(ModeAndAnswersData->Coeff[1]) && IsFinite(ModeAndAnswersData->Coeff[2])))
             {
                 PrintErrorValue(COEFFICIENTS_NOT_NUMBER, __func__);
                 return COEFFICIENTS_NOT_NUMBER;
             }
             else
             {
-                SolvingQuadraticEquation(*a, *b, *c, ModeAndAnswersData);
+                SolvingQuadraticEquation(ModeAndAnswersData);
             }
 
             if (IsFinite(ModeAndAnswersData->Answer1[0]) && IsFinite(ModeAndAnswersData->Answer1[1])
@@ -39,18 +39,18 @@ enum ErrorHandling ConsoleInputConsoleOutput(double* a, double* b, double*c, str
     return NO_ERRORS;
 }
 
-enum ErrorHandling FileOneInputConsoleOutput(double* a, double* b, double* c, struct ModeAndAnswers* ModeAndAnswersData, FILE* file)
+enum ErrorHandling FileOneInputConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData, FILE* file)
 {
-    if (!FileInput(a, b, c, file))
+    if (!FileInput(ModeAndAnswersData->Coeff, file))
     {
-        if (!(IsFinite(*a) && IsFinite(*b) && IsFinite(*c)))
+        if (!(IsFinite(ModeAndAnswersData->Coeff[0]) && IsFinite(ModeAndAnswersData->Coeff[1]) && IsFinite(ModeAndAnswersData->Coeff[2])))
         {
             PrintErrorValue(COEFFICIENTS_NOT_NUMBER, __func__);
             return COEFFICIENTS_NOT_NUMBER;
         }
         else
         {
-            SolvingQuadraticEquation(*a, *b, *c, ModeAndAnswersData);
+            SolvingQuadraticEquation(ModeAndAnswersData);
         }
 
         if (IsFinite(ModeAndAnswersData->Answer1[0]) && IsFinite(ModeAndAnswersData->Answer1[1])
@@ -78,20 +78,20 @@ enum ErrorHandling FileOneInputConsoleOutput(double* a, double* b, double* c, st
     return NO_ERRORS;
 }
 
-enum ErrorHandling FileManyInputConsoleOutput(double* a, double* b, double* c, struct ModeAndAnswers* ModeAndAnswersData, FILE* file)
+enum ErrorHandling FileManyInputConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData, FILE* file)
 {
     int count = 1;
-    while (!FileInput(a, b, c, file))
+    while (!FileInput(ModeAndAnswersData->Coeff, file))
     {
         printf("%d\n", count);
-        if (!(IsFinite(*a) && IsFinite(*b) && IsFinite(*c)))
+        if (!(IsFinite(ModeAndAnswersData->Coeff[0]) && IsFinite(ModeAndAnswersData->Coeff[1]) && IsFinite(ModeAndAnswersData->Coeff[2])))
         {
             PrintErrorValue(COEFFICIENTS_NOT_NUMBER, __func__);
             return COEFFICIENTS_NOT_NUMBER;
         }
         else
         {
-            SolvingQuadraticEquation(*a, *b, *c, ModeAndAnswersData);
+            SolvingQuadraticEquation(ModeAndAnswersData);
         }
 
         if (IsFinite(ModeAndAnswersData->Answer1[0]) && IsFinite(ModeAndAnswersData->Answer1[1])
@@ -117,20 +117,20 @@ enum ErrorHandling FileManyInputConsoleOutput(double* a, double* b, double* c, s
     return NO_ERRORS;
 }
 
-enum ErrorHandling SolvingFuncUnitTest(double* a, double* b, double* c, struct ModeAndAnswers* ModeAndAnswersData, FILE* file, char* argv)
+enum ErrorHandling SolvingFuncUnitTest(struct ModeAndAnswers* ModeAndAnswersData, FILE* file, char* argv)
 {
     int count = 1;
     bool flag = true;
-    while (!FileInput(a, b, c, file))
+    while (!FileInput(ModeAndAnswersData->Coeff, file))
     {
-        if (!(IsFinite(*a) && IsFinite(*b) && IsFinite(*c)))
+        if (!(IsFinite(ModeAndAnswersData->Coeff[0]) && IsFinite(ModeAndAnswersData->Coeff[1]) && IsFinite(ModeAndAnswersData->Coeff[2])))
         {
             PrintErrorValue(COEFFICIENTS_NOT_NUMBER, __func__);
             return COEFFICIENTS_NOT_NUMBER;
         }
         else
         {
-            SolvingQuadraticEquation(*a, *b, *c, ModeAndAnswersData);
+            SolvingQuadraticEquation(ModeAndAnswersData);
         }
 
         double Ans1[2] = {0, 0}, Ans2[2] = {0, 0};

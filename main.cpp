@@ -12,16 +12,15 @@
 
 int main(int argc, char* argv[])
 {
-    double a = NAN, b = NAN, c = NAN;      // coefficient of quadratic equation
 
-    struct ModeAndAnswers ModeAndAnswersData = {ERROR, {NAN, NAN}, {NAN, NAN}};
+    struct ModeAndAnswers ModeAndAnswersData = {ERROR, {NAN, NAN, NAN}, {NAN, NAN}, {NAN, NAN}};
 
     switch (argc)
     {
     
     /* Mode with console input and console output */
     case 1:
-        ConsoleInputConsoleOutput(&a, &b, &c, &ModeAndAnswersData);
+        ConsoleInputConsoleOutput(&ModeAndAnswersData);
         break;
     
     /* Mode with file input and console output */
@@ -39,7 +38,7 @@ int main(int argc, char* argv[])
             }
             else
             {
-                FileOneInputConsoleOutput(&a, &b, &c, &ModeAndAnswersData, file);
+                FileOneInputConsoleOutput(&ModeAndAnswersData, file);
             }
         }
         break;
@@ -55,7 +54,7 @@ int main(int argc, char* argv[])
             }
             else
             {
-                FileManyInputConsoleOutput(&a, &b, &c, &ModeAndAnswersData, file);
+                FileManyInputConsoleOutput(&ModeAndAnswersData, file);
             }
         }
 
@@ -68,7 +67,7 @@ int main(int argc, char* argv[])
             }
             else
             {
-                SolvingFuncUnitTest(&a, &b, &c, &ModeAndAnswersData, file, argv[1]);
+                SolvingFuncUnitTest(&ModeAndAnswersData, file, argv[1]);
             }
         }
 
