@@ -25,8 +25,8 @@ enum ErrorHandling ConsoleInputConsoleOutput(struct ModeAndAnswers* ModeAndAnswe
                 SolvingQuadraticEquation(ModeAndAnswersData);
             }
 
-            if (IsFinite(ModeAndAnswersData->Answer1[0]) && IsFinite(ModeAndAnswersData->Answer1[1])
-            && IsFinite(ModeAndAnswersData->Answer2[0]) && IsFinite(ModeAndAnswersData->Answer2[1]))
+            if (IsFinite(ModeAndAnswersData->Answers[0][0]) && IsFinite(ModeAndAnswersData->Answers[0][1])
+            && IsFinite(ModeAndAnswersData->Answers[1][0]) && IsFinite(ModeAndAnswersData->Answers[1][1]))
             {
                 ConsoleOutput(ModeAndAnswersData);
             }
@@ -53,8 +53,8 @@ enum ErrorHandling FileOneInputConsoleOutput(struct ModeAndAnswers* ModeAndAnswe
             SolvingQuadraticEquation(ModeAndAnswersData);
         }
 
-        if (IsFinite(ModeAndAnswersData->Answer1[0]) && IsFinite(ModeAndAnswersData->Answer1[1])
-        && IsFinite(ModeAndAnswersData->Answer2[0]) && IsFinite(ModeAndAnswersData->Answer2[1]))
+        if (IsFinite(ModeAndAnswersData->Answers[0][0]) && IsFinite(ModeAndAnswersData->Answers[0][1])
+        && IsFinite(ModeAndAnswersData->Answers[1][0]) && IsFinite(ModeAndAnswersData->Answers[1][1]))
         {
             ConsoleOutput(ModeAndAnswersData);
         }
@@ -94,8 +94,8 @@ enum ErrorHandling FileManyInputConsoleOutput(struct ModeAndAnswers* ModeAndAnsw
             SolvingQuadraticEquation(ModeAndAnswersData);
         }
 
-        if (IsFinite(ModeAndAnswersData->Answer1[0]) && IsFinite(ModeAndAnswersData->Answer1[1])
-        && IsFinite(ModeAndAnswersData->Answer2[0]) && IsFinite(ModeAndAnswersData->Answer2[1]))
+        if (IsFinite(ModeAndAnswersData->Answers[0][0]) && IsFinite(ModeAndAnswersData->Answers[0][1])
+        && IsFinite(ModeAndAnswersData->Answers[1][0]) && IsFinite(ModeAndAnswersData->Answers[1][1]))
         {
             ConsoleOutput(ModeAndAnswersData);
         }
@@ -137,17 +137,17 @@ enum ErrorHandling SolvingFuncUnitTest(struct ModeAndAnswers* ModeAndAnswersData
         fscanf(file, "%lf %lf %lf %lf", &Ans1[0], &Ans1[1], &Ans2[0], &Ans2[1]);
         ScipInput(file);
 
-        if (!(EqualityNumbers(ModeAndAnswersData->Answer1[0], Ans1[0])
-        && EqualityNumbers(ModeAndAnswersData->Answer1[1], Ans1[1])
-        && EqualityNumbers(ModeAndAnswersData->Answer2[0], Ans2[0])
-        && EqualityNumbers(ModeAndAnswersData->Answer2[1], Ans2[1])))
+        if (!(EqualityNumbers(ModeAndAnswersData->Answers[0][0], Ans1[0])
+        && EqualityNumbers(ModeAndAnswersData->Answers[0][1], Ans1[1])
+        && EqualityNumbers(ModeAndAnswersData->Answers[1][0], Ans2[0])
+        && EqualityNumbers(ModeAndAnswersData->Answers[1][1], Ans2[1])))
         {
             printf("Unit test error in line %d of %s\n", count, argv);
             printf("Test values are: real: %.4lf complex: %.4lf\n real: %.4lf complex: %.4lf\n\n",
             Ans1[0], Ans1[1], Ans2[0], Ans2[1]);
             printf("Test values are: real: %.4lf complex: %.4lf\n real: %.4lf complex: %.4lf\n\n",
-            ModeAndAnswersData->Answer1[0], ModeAndAnswersData->Answer1[1],
-            ModeAndAnswersData->Answer2[0], ModeAndAnswersData->Answer2[1]);
+            ModeAndAnswersData->Answers[0][0], ModeAndAnswersData->Answers[0][1],
+            ModeAndAnswersData->Answers[1][0], ModeAndAnswersData->Answers[1][1]);
             flag = false;
         }
                     

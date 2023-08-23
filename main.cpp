@@ -13,7 +13,7 @@
 int main(int argc, char* argv[])
 {
 
-    struct ModeAndAnswers ModeAndAnswersData = {ERROR, {NAN, NAN, NAN}, {NAN, NAN}, {NAN, NAN}};
+    struct ModeAndAnswers ModeAndAnswersData = {ERROR, {NAN, NAN, NAN}, {{NAN, NAN}, {NAN, NAN}}};
 
     switch (argc)
     {

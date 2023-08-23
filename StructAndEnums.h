@@ -40,8 +40,7 @@ struct ModeAndAnswers
 {
     OutputMode OutputMode;     ///< enum OutputMode with mode of output
     double Coeff[3];           ///< coefficients array Coeff[0] - a, Coeff[1] - b, Coeff[2] - c
-    double Answer1[2];         ///< first root array Answer1[0] - real part, Answer1[1] - complex part
-    double Answer2[2];         ///< first root array Answer2[0] - real part, Answer2[1] - complex part
+    double Answers[2][2];      ///< roots array Answers[0] - first root, Answers[1] - second root, Answers[][0] - real part, Answers[][1] - complex part
 };
 
 #endif // STRUCT_AND_ENUMS_H
