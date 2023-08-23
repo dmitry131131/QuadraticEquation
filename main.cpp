@@ -8,7 +8,7 @@
 #include "StructAndEnums.h"
 #include "InputOutputFunc.h"
 #include "ComputationalFunc.h"
-
+#include "MainFuncModes.h"
 
 int main(int argc, char* argv[])
 {
@@ -21,19 +21,7 @@ int main(int argc, char* argv[])
     
     /* Mode with console input and console output */
     case 1:
-        if (!ConsoleInput(&a, &b, &c))
-        {
-            if (!(IsFinite(a) && IsFinite(b) && IsFinite(c)))
-                PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
-            else
-                SolvingQuadraticEquation(a, b, c, &ModeAndAnswersData);
-
-            if (IsFinite(ModeAndAnswersData.Answer1[0]) && IsFinite(ModeAndAnswersData.Answer1[1])
-            && IsFinite(ModeAndAnswersData.Answer2[0]) && IsFinite(ModeAndAnswersData.Answer2[1]))
-                ConsoleOutput(&ModeAndAnswersData);
-            else
-                PrintErrorValue(ANSWERS_NOT_NUMBER);
-        }
+        ConsoleInputConsoleOutput(&a, &b, &c, &ModeAndAnswersData);
         break;
     
     /* Mode with file input and console output */
@@ -51,25 +39,7 @@ int main(int argc, char* argv[])
             }
             else
             {
-                if (!FileInput(&a, &b, &c, file))
-                {
-                    if (!(IsFinite(a) && IsFinite(b) && IsFinite(c)))
-                        PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
-                    else
-                        SolvingQuadraticEquation(a, b, c, &ModeAndAnswersData);
-
-                    if (IsFinite(ModeAndAnswersData.Answer1[0]) && IsFinite(ModeAndAnswersData.Answer1[1])
-                    && IsFinite(ModeAndAnswersData.Answer2[0]) && IsFinite(ModeAndAnswersData.Answer2[1]))
-                        ConsoleOutput(&ModeAndAnswersData);
-                    else
-                        PrintErrorValue(ANSWERS_NOT_NUMBER);
-                }
-                else
-                {  
-                    PrintErrorValue(FILE_INPUT_ERROR);
-                }
-                if (fclose(file) == EOF)
-                        PrintErrorValue(CLOSE_FILE_ERROR);
+                FileOneInputConsoleOutput(&a, &b, &c, &ModeAndAnswersData, file);
             }
         }
         break;
@@ -85,30 +55,8 @@ int main(int argc, char* argv[])
             }
             else
             {
-                int count = 1;
-                while (!FileInput(&a, &b, &c, file))
-                {
-                    printf("%d\n", count);
-                    if (!(IsFinite(a) && IsFinite(b) && IsFinite(c)))
-                        PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
-                    else
-                        SolvingQuadraticEquation(a, b, c, &ModeAndAnswersData);
-
-                    if (IsFinite(ModeAndAnswersData.Answer1[0]) && IsFinite(ModeAndAnswersData.Answer1[1])
-                    && IsFinite(ModeAndAnswersData.Answer2[0]) && IsFinite(ModeAndAnswersData.Answer2[1]))
-                        ConsoleOutput(&ModeAndAnswersData);
-                    else
-                        PrintErrorValue(ANSWERS_NOT_NUMBER);
-                    
-                    ScipInput(file);
-                    
-                    count++;
-                }
-                
-                if (fclose(file) == EOF)
-                    PrintErrorValue(CLOSE_FILE_ERROR);
+                FileManyInputConsoleOutput(&a, &b, &c, &ModeAndAnswersData, file);
             }
-            
         }
 
         else if (!strcmp(argv[2], "t"))
@@ -120,40 +68,7 @@ int main(int argc, char* argv[])
             }
             else
             {
-                int count = 1;
-                bool flag = true;
-                while (!FileInput(&a, &b, &c, file))
-                {
-                    if (!(IsFinite(a) && IsFinite(b) && IsFinite(c)))
-                        PrintErrorValue(COEFFICIENTS_NOT_NUMBER);
-                    else
-                        SolvingQuadraticEquation(a, b, c, &ModeAndAnswersData);
-
-                    double Ans1[2] = {0, 0}, Ans2[2] = {0, 0};
-                    fscanf(file, "%lf %lf %lf %lf", &Ans1[0], &Ans1[1], &Ans2[0], &Ans2[1]);
-                    ScipInput(file);
-
-                    if (!(EqualityNumbers(ModeAndAnswersData.Answer1[0], Ans1[0])
-                    && EqualityNumbers(ModeAndAnswersData.Answer1[1], Ans1[1])
-                    && EqualityNumbers(ModeAndAnswersData.Answer2[0], Ans2[0])
-                    && EqualityNumbers(ModeAndAnswersData.Answer2[1], Ans2[1])))
-                    {
-                        printf("Unit test error in line %d of %s\n", count, argv[1]);
-                        printf("Test values are: real: %.4lf complex: %.4lf\n real: %.4lf complex: %.4lf\n\n",
-                        Ans1[0], Ans1[1], Ans2[0], Ans2[1]);
-                        printf("Test values are: real: %.4lf complex: %.4lf\n real: %.4lf complex: %.4lf\n\n",
-                        ModeAndAnswersData.Answer1[0], ModeAndAnswersData.Answer1[1],
-                        ModeAndAnswersData.Answer2[0], ModeAndAnswersData.Answer2[1]);
-                        flag = false;
-                    }
-                    
-                    count++;
-                }
-
-                if (flag)
-                {
-                    printf("Unit test successfull!!!\n");
-                }
+                SolvingFuncUnitTest(&a, &b, &c, &ModeAndAnswersData, file, argv[1]);
             }
         }
 
