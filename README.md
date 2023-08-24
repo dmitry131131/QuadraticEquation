@@ -2,8 +2,8 @@
 Console programm to solve quadratic equation
 
 
-Usage: [flag]\n
-# []               -- console input and console output
+### Usage: [flag]\n
+ []               -- console input and console output
 Enter a b c decimal coefficients separated by a space
 
 # [-f] [filename]  -- input first 3 numbers in row from and output solutions to console
