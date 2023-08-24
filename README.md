@@ -6,7 +6,8 @@ Console programm to solve quadratic equation
 
 `make rec_t`      -- compile test version 
 
-### Usage: [flag]
+## Usage: [flag]
+### Realise Mode
 `[]`               -- console input and console output
 Enter a b c decimal coefficients separated by a space
 
@@ -15,6 +16,8 @@ programm works until End Of File
 
 `[-h]`             -- output help information about programm
 
+
+### Test Mode
 `[-t] [filename]`  -- test mode:
 programm read first 3 numbers, solve equation and compare roots with roots in file
 a b c  real1 complex1 real2 complex2
