@@ -3,6 +3,8 @@
  * @brief File with utilits function 
 */
 #include <math.h>
+
+#include "config.h"
 #include "StructAndEnums.h"
 #include "math_utilits.h"
 

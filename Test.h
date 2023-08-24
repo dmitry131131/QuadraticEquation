@@ -3,8 +3,6 @@
  * @brief Prototypes of test functions
 */
 
-const int TESTNAME_LEN = 100;
-
 /**
  * @param [in] filename name of test data file
  * @return Error code

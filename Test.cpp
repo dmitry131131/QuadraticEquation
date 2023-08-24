@@ -2,7 +2,6 @@
  * @file
  * @brief file with test func
 */
-
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -20,30 +19,31 @@ enum ErrorHandling Tester(const int argc, char* argv[])
 
     for (int i = 1; i < argc; i++)
     {
-
-        FILE* file = NULL;
-
         if (!strcmp(argv[i], "-t"))
         {
-            if (argc >= i)
+            if (FILE* file = OpenFile(argc, argv, &i))
             {
-                file = fopen(argv[i + 1], "r");
+                PrintFilename(argv[i + 1], VIOLET);
+
+                if (!(ErrorCode = TestMode(file)))
+                {
+                    ChangeColor(GREEN);
+                    printf("Test successfull!\n\n");
+                    ChangeColor(NONE);
+                }
+
+                i++;
+            }
+            else
+            {
+                PrintFilename(argv[i + 1], VIOLET);
+                return FILE_NOT_OPENED;
             }
         }
+        
         else 
         {
             return INVALID_CONSOLE_ARG;
-        }
-
-        if (file != NULL)
-        {
-            printf("Test file: %s\n", argv[i + 1]);
-            ErrorCode = TestMode(file);
-            i++;
-        }
-        else
-        {
-            ErrorCode = FILE_NOT_OPENED;
         }
     }
 
@@ -52,7 +52,7 @@ enum ErrorHandling Tester(const int argc, char* argv[])
 
 enum ErrorHandling TestMode(FILE* file)
 {
-    struct ModeAndAnswers ModeAndAnswersData = {ERROR, {NAN, NAN, NAN}, {{NAN, NAN}, {NAN, NAN}}};
+    struct ModeAndAnswers ModeAndAnswersData = {INPUT_ERROR, {NAN, NAN, NAN}, {{NAN, NAN}, {NAN, NAN}}};
     enum ErrorHandling ErrorCode = NO_ERRORS;
 
     while(!(ErrorCode = Input(ModeAndAnswersData.Coeff, file)))
@@ -64,10 +64,10 @@ enum ErrorHandling TestMode(FILE* file)
             fscanf(file, "%lf %lf %lf %lf", &Ans1[0], &Ans1[1], &Ans2[0], &Ans2[1]);
             SkipInput(file);
 
-            if (!(EqualityNumbers(ModeAndAnswersData.Answers[0].Real, Ans1[0])
-            && EqualityNumbers(ModeAndAnswersData.Answers[0].Complex, Ans1[1])
-            && EqualityNumbers(ModeAndAnswersData.Answers[1].Real, Ans2[0])
-            && EqualityNumbers(ModeAndAnswersData.Answers[1].Complex, Ans2[1])))
+            if (!(EqualityNumbers(ModeAndAnswersData.Answers[0].Real,    Ans1[0])
+               && EqualityNumbers(ModeAndAnswersData.Answers[0].Complex, Ans1[1])
+               && EqualityNumbers(ModeAndAnswersData.Answers[1].Real,    Ans2[0])
+               && EqualityNumbers(ModeAndAnswersData.Answers[1].Complex, Ans2[1])))
             {
                 printf("Test values are: real: %.4lf complex: %.4lf\n real: %.4lf complex: %.4lf\n\n",
                 Ans1[0], Ans1[1], Ans2[0], Ans2[1]);

@@ -5,6 +5,8 @@
 */
 #include <stdio.h>
 #include <math.h>
+
+#include "config.h"
 #include "StructAndEnums.h"
 #include "InputOutput.h"
 #include "Computational.h"
@@ -13,7 +15,7 @@
 
 enum ErrorHandling MainMode(FILE* file)
 {
-    struct ModeAndAnswers ModeAndAnswersData = {ERROR, {NAN, NAN, NAN}, {{NAN, NAN}, {NAN, NAN}}};
+    struct ModeAndAnswers ModeAndAnswersData = {INPUT_ERROR, {NAN, NAN, NAN}, {{NAN, NAN}, {NAN, NAN}}};
     enum ErrorHandling ErrorCode = NO_ERRORS;
 
     if (!(ErrorCode = Input(ModeAndAnswersData.Coeff, file)))
@@ -21,6 +23,7 @@ enum ErrorHandling MainMode(FILE* file)
         if (!(ErrorCode = SolvingQuadraticEquation(&ModeAndAnswersData)))
         {
             ErrorCode = ConsoleOutput(&ModeAndAnswersData);
+            SkipInput(file);
         }
     }
 

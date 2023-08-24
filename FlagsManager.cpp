@@ -4,7 +4,7 @@
 */
 #include <stdio.h>
 #include <string.h>
-#include "config.h"
+
 #include "StructAndEnums.h"
 #include "Test.h"
 #include "InputOutput.h"
@@ -14,7 +14,6 @@
 
 enum ErrorHandling FlagsManager(const int argc, char* argv[])
 {
-
     enum ErrorHandling ErrorCode = NO_ERRORS;
 
     #ifdef RUN_TEST
@@ -33,34 +32,22 @@ enum ErrorHandling FlagsManager(const int argc, char* argv[])
 
         else if (!strcmp(argv[i], "-f"))
         {
-            if (argc >= (i + 1)) 
+            if (FILE* file = OpenFile(argc, argv, &i))
             {
-                FILE* file = fopen(argv[i+1], "r");
-
-                if (file == NULL)
-                {
-                    ErrorCode = FILE_NOT_OPENED;
-                }
-
-                else
-                {
-                    printf("Input file: %s\n", argv[i + 1]);
-                    while (!MainMode(file)) {SkipInput(file);}
-                    i++;
-                }
+                PrintFilename(argv[i + 1], VIOLET);
+                while (!MainMode(file)) {}
+                i++;
             }
-
             else
-            {
-                ErrorCode = FILE_NOT_OPENED;
+            {   
+                PrintFilename(argv[i + 1], VIOLET);
+                return FILE_NOT_OPENED;
             }
         }
-
         else
         {
-            ErrorCode = INVALID_CONSOLE_ARG;
+            return INVALID_CONSOLE_ARG;
         }
-
     }
 
     #endif

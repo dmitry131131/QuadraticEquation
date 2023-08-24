@@ -4,8 +4,6 @@
 */
 #include <stdio.h>
 
-#include "config.h"
-
 #include "StructAndEnums.h"
 #include "InputOutput.h"
 #include "MainMode.h"
@@ -20,11 +18,7 @@ int main(int argc, char* argv[])
 
     #ifdef RUN_TEST
 
-    if (ErrorCode == NO_ERRORS)
-    {
-        printf("Test successfull!\n\n");
-    }
-    else
+    if (ErrorCode != NO_ERRORS)
     {
         PrintErrorValue(ErrorCode);
         return 0;

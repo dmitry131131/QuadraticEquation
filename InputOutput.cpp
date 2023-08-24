@@ -4,13 +4,24 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <windows.h>
+
 #include "StructAndEnums.h"
 #include "InputOutput.h"
 #include "Computational.h"
 
-void SkipInput(FILE* flow)
-{
-    while ((getc(flow)) != '\n') {}
+enum ErrorHandling SkipInput(FILE* flow)
+{   
+    int ch = 0;
+    while (1) 
+    {
+        ch = getc(flow);
+        if (ch == '\n') return NO_ERRORS;
+        if (ch == EOF) return FOUND_EOF_FILE;
+    }
+
+    return NO_ERRORS;
 }
 
 enum ErrorHandling Input(double* Coeff, FILE* file)
@@ -55,7 +66,7 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData
 
     case TWO_REAL_SOLUTIONS:
         printf("Equation has two real solution\n");
-        printf("First solution: %.4lf\n", ModeAndAnswersData->Answers[0].Real);
+        printf("First solution: %.4lf\n",    ModeAndAnswersData->Answers[0].Real);
         printf("Second solution: %.4lf\n\n", ModeAndAnswersData->Answers[1].Real);
         break;
 
@@ -63,11 +74,11 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData
         printf("Equation has not got real solution\n"
                "Complex solutions:\n"
                "Real part   Imaginary part\n");
-        printf("%-11.4lf %.4lf\n", ModeAndAnswersData->Answers[0].Real, ModeAndAnswersData->Answers[0].Complex);
+        printf("%-11.4lf %.4lf\n",   ModeAndAnswersData->Answers[0].Real, ModeAndAnswersData->Answers[0].Complex);
         printf("%-11.4lf %.4lf\n\n", ModeAndAnswersData->Answers[1].Real, ModeAndAnswersData->Answers[1].Complex);
         break;
-
-    case ERROR:
+    
+    case INPUT_ERROR:
         return CONSOLE_OUTPUT_ERROR;
         break;
 
@@ -81,10 +92,14 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData
 
 void PrintErrorValue(ErrorHandling ErrorCode)
 {
+    ChangeColor(RED);
+
     switch (ErrorCode)
     {
     case NO_ERRORS:
+        ChangeColor(GREEN);
         printf("Programm done successfully!\n\n");
+        ChangeColor(NONE);
         break;
 
     case COEFFICIENTS_NOT_NUMBER:
@@ -93,10 +108,6 @@ void PrintErrorValue(ErrorHandling ErrorCode)
 
     case ANSWERS_NOT_NUMBER:
         printf( "Answers are not a numbers or infinity!\n\n");
-        break;
-
-    case EXCEEDED_INPUT_LIMIT:
-        printf( "Try number is exceeded!\n\n");
         break;
 
     case FOUND_EOF_STDIN:
@@ -108,7 +119,7 @@ void PrintErrorValue(ErrorHandling ErrorCode)
         break;
 
     case FILE_NOT_OPENED:
-        printf( "File not found\n\n");
+        perror("File error: ");
         break;
 
     case FILE_INPUT_ERROR:
@@ -120,7 +131,7 @@ void PrintErrorValue(ErrorHandling ErrorCode)
         break;
 
     case CLOSE_FILE_ERROR:
-        printf( "Can't close file!\n\n");
+        perror("Close file error: ");
         break;
 
     case INVALID_CONSOLE_ARG:
@@ -134,17 +145,78 @@ void PrintErrorValue(ErrorHandling ErrorCode)
     default:
         break;
     }
+
+    ChangeColor(NONE);
 }
+
+FILE* OpenFile(const int argc, char* argv[], int* i)
+{
+    if (argc >= (*i + 1)) 
+    {
+        FILE* file = fopen(argv[*i+1], "r");
+        return file;
+    }
+
+    else
+    {
+        (*i)++;
+        return NULL;
+    }
+}
+
+void ChangeColor(enum Colors color)
+{
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+    switch (color)
+    {
+    case RED:
+        SetConsoleTextAttribute(console, FOREGROUND_RED);
+        break;
+
+    case GREEN:
+        SetConsoleTextAttribute(console, FOREGROUND_GREEN);
+        break;
+    
+    case BLUE:
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE);
+        break;
+    
+    case VIOLET:
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED);
+        break;
+
+    case NONE:
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+        break;
+    
+    default:
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+        break;
+    }
+}
+
+void PrintFilename(char* file, enum Colors color)
+{
+    printf("Input file: ");
+    ChangeColor(color);
+    printf("%s\n", file);
+    ChangeColor(NONE);
+}
+
 void HelpOutput()
 {
     printf( "# Programm to solve quadratic equation\n"
             "\n"
-            "# empty flag  -- console input and console output\n"
+            "Usage: [flag]\n"
+            "# []               -- console input and console output\n"
             "Enter a b c decimal coefficients separated by a space\n\n"
-            "# filename    -- input first 3 numbers from file and output solutions to console\n\n"
-            "# filename m  -- input first 3 numbers in row from and output solutions to console\n"
+
+            "# [-f] [filename]  -- input first 3 numbers in row from and output solutions to console\n"
             "programm works until End Of File\n\n"
-            "# filename t  -- test mode:\n"
+
+            "# [-h]             -- output help information about programm"
+
+            "# [-t] [filename]  -- test mode:\n"
             "programm read first 3 numbers, solve equation and compare roots with roots in file\n"
             "a b c  real1 complex1 real2 complex2\n"
             "a, b, c - decimal coefficient\n"
