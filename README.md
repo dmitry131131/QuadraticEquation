@@ -3,6 +3,7 @@ Console programm to solve quadratic equation
 
 ### Compile
 `make rec`       -- compile realise version
+
 `make rec_t`      -- compile test version 
 
 ### Usage: [flag]\n
