@@ -32,7 +32,8 @@ enum ErrorHandling {
     FILE_INPUT_ERROR = 7,           ///< File contains invalid data
     FOUND_EOF_FILE = 8,             ///< fscanf found EOF in file
     CLOSE_FILE_ERROR = 9,           ///< programm can't close the file
-    INVALID_CONSOLE_ARG = 10        ///< User entered invalid console arguments
+    INVALID_CONSOLE_ARG = 10,       ///< User entered invalid console arguments
+    TEST_FAILED = 11
 };
 
 /// @brief struct of 1 root

@@ -5,6 +5,8 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
+
 #include "StructAndEnums.h"
 #include "InputOutput.h"
 #include "Computational.h"
@@ -12,19 +14,39 @@
 #include "math_utilits.h"
 #include "Test.h"
 
-enum ErrorHandling Tester(const char* filename)
+enum ErrorHandling Tester(const int argc, char* argv[])
 {
-    FILE* file = fopen(filename, "r");
     enum ErrorHandling ErrorCode = NO_ERRORS;
-    if (file == NULL)
+
+    for (int i = 1; i < argc; i++)
     {
-        return FILE_NOT_OPENED;
+
+        FILE* file = NULL;
+
+        if (!strcmp(argv[i], "-t"))
+        {
+            if (argc >= i)
+            {
+                file = fopen(argv[i + 1], "r");
+            }
+        }
+        else 
+        {
+            return INVALID_CONSOLE_ARG;
+        }
+
+        if (file != NULL)
+        {
+            printf("Test file: %s\n", argv[i + 1]);
+            ErrorCode = TestMode(file);
+            i++;
+        }
+        else
+        {
+            ErrorCode = FILE_NOT_OPENED;
+        }
     }
-    else 
-    {
-        printf("Test file: %s\n", filename);
-        ErrorCode = TestMode(file);
-    }
+
     return ErrorCode;
 }
 
@@ -52,13 +74,22 @@ enum ErrorHandling TestMode(FILE* file)
                 printf("Test values are: real: %.4lf complex: %.4lf\n real: %.4lf complex: %.4lf\n\n",
                 ModeAndAnswersData.Answers[0].Real, ModeAndAnswersData.Answers[0].Complex,
                 ModeAndAnswersData.Answers[1].Real, ModeAndAnswersData.Answers[1].Complex);
-                return FILE_INPUT_ERROR;
+
+                ErrorCode = TEST_FAILED;
+                break;
             }
+
+            else ErrorCode = NO_ERRORS;
+
         }
     }
 
     if (ErrorCode == FOUND_EOF_FILE)
+    {
         return NO_ERRORS;
+    }
     else
+    {
         return ErrorCode;
+    }
 }

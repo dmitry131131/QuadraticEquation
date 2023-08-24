@@ -124,7 +124,11 @@ void PrintErrorValue(ErrorHandling ErrorCode)
         break;
 
     case INVALID_CONSOLE_ARG:
-        printf("Invalid third argument!\n\n");
+        printf("Invalid console argument!\n\n");
+        break;
+
+    case TEST_FAILED:
+        printf("Test Failed!\n\n");
         break;
 
     default:

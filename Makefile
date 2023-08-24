@@ -33,5 +33,8 @@ math_utilits.o : math_utilits.cpp
 Test.o : Test.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+rec: main.cpp Computational.cpp FlagsManager.cpp InputOutput.cpp MainMode.cpp math_utilits.cpp Test.cpp
+	$(CXX) $(CXXFLAGS) $^ -o $(TARGET)
+
 clean :
 	rm $(TARGET) *.o

@@ -16,17 +16,26 @@ int main(int argc, char* argv[])
 {
     enum ErrorHandling ErrorCode = NO_ERRORS;
 
+    ErrorCode = FlagsManager(argc, argv);
+
     #ifdef RUN_TEST
-    if((ErrorCode = Tester("test.txt")))
+
+    if (ErrorCode == NO_ERRORS)
     {
-        printf("Test Failed!\n");
+        printf("Test successfull!\n\n");
+    }
+    else
+    {
+        PrintErrorValue(ErrorCode);
         return 0;
     }
-    
-    printf("Test successfull!\n\n");
-    
+
     #endif
-    FlagsManager(argc, argv);
+
+    if (ErrorCode)
+    {
+        PrintErrorValue(ErrorCode);
+    }
 
     while (1)
     {   
@@ -43,7 +52,9 @@ int main(int argc, char* argv[])
                 SkipInput(stdin);
                 PrintErrorValue(ErrorCode);
             }
+
         printf("Please enter digital data\n");
+
         }
     }
 

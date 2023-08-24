@@ -3,11 +3,13 @@
  * @brief Prototypes of test functions
 */
 
+const int TESTNAME_LEN = 100;
+
 /**
  * @param [in] filename name of test data file
  * @return Error code
 */
-enum ErrorHandling Tester(const char* filename);
+enum ErrorHandling Tester(const int argc, char* argv[]);
 /**
  * @param [in] file File with test data
  * @return Error Code
