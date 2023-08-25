@@ -39,5 +39,11 @@ rec : main.cpp Computational.cpp FlagsManager.cpp InputOutput.cpp MainMode.cpp m
 rec_t : main.cpp Computational.cpp FlagsManager.cpp InputOutput.cpp MainMode.cpp math_utilits.cpp Test.cpp
 	$(CXX) $(CXXFLAGS) -DRUN_TEST $^ -o $(TARGET)
 
+rec_t_l : main.cpp Computational.cpp FlagsManager.cpp InputOutput.cpp MainMode.cpp math_utilits.cpp Test.cpp Logger.cpp
+	$(CXX) $(CXXFLAGS) -DRUN_TEST -D_SHOW_LOGG_MESSAGE $^ -o $(TARGET)
+
+rec_l : main.cpp Computational.cpp FlagsManager.cpp InputOutput.cpp MainMode.cpp math_utilits.cpp Test.cpp Logger.cpp
+	$(CXX) $(CXXFLAGS) -D_SHOW_LOGG_MESSAGE $^ -o $(TARGET)
+
 clean :
 	rm $(TARGET) *.o

@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include "StructAndEnums.h"
+#include "Logger.h"
 #include "InputOutput.h"
 #include "Computational.h"
 #include "MainMode.h"
@@ -15,6 +16,8 @@
 
 enum ErrorHandling Tester(const int argc, char* argv[])
 {
+    AddLogg();
+
     enum ErrorHandling ErrorCode = NO_ERRORS;
 
     for (int i = 1; i < argc; i++)
@@ -31,28 +34,31 @@ enum ErrorHandling Tester(const int argc, char* argv[])
                     printf("Test successfull!\n\n");
                     ChangeColor(NONE);
                 }
-
                 i++;
             }
             else
             {
                 PrintFilename(argv[i + 1], VIOLET);
+                OutputLogg_(FILE_NOT_OPENED, _LoggFile);
                 return FILE_NOT_OPENED;
             }
         }
-        
         else 
         {
+            RemoveLogg_();
             return INVALID_CONSOLE_ARG;
         }
     }
 
+    RemoveLogg_();
     return ErrorCode;
 }
 
 enum ErrorHandling TestMode(FILE* file)
 {
-    struct ModeAndAnswers ModeAndAnswersData = {INPUT_ERROR, {NAN, NAN, NAN}, {{NAN, NAN}, {NAN, NAN}}};
+    AddLogg();
+
+    struct ModeAndAnswers ModeAndAnswersData = {{{NAN, NAN}, {NAN, NAN}}, {NAN, NAN, NAN}, INPUT_ERROR};
     enum ErrorHandling ErrorCode = NO_ERRORS;
 
     while(!(ErrorCode = Input(ModeAndAnswersData.Coeff, file)))
@@ -83,6 +89,8 @@ enum ErrorHandling TestMode(FILE* file)
 
         }
     }
+
+    RemoveLogg_();
 
     if (ErrorCode == FOUND_EOF_FILE)
     {

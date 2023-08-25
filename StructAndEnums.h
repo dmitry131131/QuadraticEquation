@@ -7,7 +7,7 @@
 
 /// @brief Enum to controle output mode of programm: 1 root, 2 roots, 2 complex roots... 
 enum OutputMode {
-    INPUT_ERROR = 0,                  ///< Indicates error in solving
+    INPUT_ERROR = 0,            ///< Indicates error in solving
     NOT_EQUATION = 1,           ///< Indicates that the numbers entered don't form an equation
     LINERAL_EQUATION = 2,       ///< Indicates that the numbers entered form lineral equation
     ONE_REAL_SOLUTION = 3,      ///< Indicates that entered equation has one real root
@@ -27,7 +27,8 @@ enum ErrorHandling {
     FOUND_EOF_FILE = 7,             ///< fscanf found EOF in file
     CLOSE_FILE_ERROR = 8,           ///< programm can't close the file
     INVALID_CONSOLE_ARG = 9,        ///< User entered invalid console arguments
-    TEST_FAILED = 10                ///< Test failed in test mode 
+    TEST_FAILED = 10,               ///< Test failed in test mode 
+    INVALID_INPUT = 11
 };
 
 /// @brief struct of 1 root
@@ -38,9 +39,9 @@ struct Root {
 
 /// @brief structure contains Mode of output and two roots, coefficients of equation and answers
 struct ModeAndAnswers {
-    OutputMode OutputMode;     ///< enum OutputMode with mode of output
-    double Coeff[3];           ///< coefficients array Coeff[0] - a, Coeff[1] - b, Coeff[2] - c
-    struct Root Answers[2];    
+    struct Root Answers[2]; 
+    double Coeff[3];           ///< coefficients array Coeff[0] - a, Coeff[1] - b, Coeff[2] - c 
+    OutputMode OutputMode;     ///< enum OutputMode with mode of output  
 };
 
 #endif // STRUCT_AND_ENUMS_H

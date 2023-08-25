@@ -27,7 +27,18 @@ enum ErrorHandling SkipInput(FILE* flow)
 enum ErrorHandling Input(double* Coeff, FILE* file)
 {
     int log = fscanf(file ,"%lf %lf %lf", &Coeff[0], &Coeff[1], &Coeff[2]);
+/*
+    int ch;
+    if ((ch = getc(file)) == 'q') {}
 
+    else if (ch != '\n') 
+    {
+        ungetc(ch, file);
+        return INVALID_INPUT;
+    }
+
+    ungetc(ch, file);
+*/
     switch (log)
     {
     case 3:
@@ -90,7 +101,7 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData
     return NO_ERRORS;
 }
 
-void PrintErrorValue(ErrorHandling ErrorCode)
+void PrintErrorValue(ErrorHandling ErrorCode, FILE* flow)
 {
     ChangeColor(RED);
 
@@ -98,48 +109,52 @@ void PrintErrorValue(ErrorHandling ErrorCode)
     {
     case NO_ERRORS:
         ChangeColor(GREEN);
-        printf("Programm done successfully!\n\n");
+        fprintf(flow, "Programm done successfully!\n\n");
         ChangeColor(NONE);
         break;
 
     case COEFFICIENTS_NOT_NUMBER:
-        printf( "Coefficients not a number or infinity!\n\n");
+        fprintf(flow, "Coefficients not a number or infinity!\n\n");
         break;
 
     case ANSWERS_NOT_NUMBER:
-        printf( "Answers are not a numbers or infinity!\n\n");
+        fprintf(flow, "Answers are not a numbers or infinity!\n\n");
         break;
 
     case FOUND_EOF_STDIN:
-        printf( "Found EOF in stdin flow\n\n");
+        fprintf(flow, "Found EOF in stdin flow\n\n");
         break;
 
     case CONSOLE_OUTPUT_ERROR:
-        printf( "Output error!\n\n");
+        fprintf(flow, "Output error!\n\n");
         break;
 
     case FILE_NOT_OPENED:
-        perror("File error: ");
+        fprintf(flow, "File error: %s\n", _sys_errlist[errno]);
         break;
 
     case FILE_INPUT_ERROR:
-        printf( "Invalid data in file!\n\n");
+        fprintf(flow, "Invalid data in file!\n\n");
         break;
 
     case FOUND_EOF_FILE:
-        printf( "Found EOF in file!\n\n");
+        fprintf(flow, "Found EOF in file!\n\n");
         break;
 
     case CLOSE_FILE_ERROR:
-        perror("Close file error: ");
+        fprintf(flow, "Close file error:  %s\n", _sys_errlist[errno]);
         break;
 
     case INVALID_CONSOLE_ARG:
-        printf("Invalid console argument!\n\n");
+        fprintf(flow, "Invalid console argument!\n\n");
         break;
 
     case TEST_FAILED:
-        printf("Test Failed!\n\n");
+        fprintf(flow, "Test Failed!\n\n");
+        break;
+
+    case INVALID_INPUT:
+        fprintf(flow, "Invalid input format!\n\n");
         break;
 
     default:
@@ -149,7 +164,7 @@ void PrintErrorValue(ErrorHandling ErrorCode)
     ChangeColor(NONE);
 }
 
-FILE* OpenFile(const int argc, char* argv[], int* i)
+FILE* OpenFile(const int argc, const char* const argv[], int* i)
 {
     if (argc >= (*i + 1)) 
     {

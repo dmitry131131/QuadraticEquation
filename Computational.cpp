@@ -5,12 +5,14 @@
 #include <stdio.h>
 #include <math.h>
 #include "StructAndEnums.h"
+#include "Logger.h"
 #include "Computational.h"
 #include "math_utilits.h"
 
 /* solving quadratic equation function */
 enum ErrorHandling SolvingQuadraticEquation(struct ModeAndAnswers* ModeAndAnswersData)
 {
+    AddLogg();
     double D = NAN;     // Discriminant  
 
     if (!IsZero(ModeAndAnswersData->Coeff[0]))
@@ -47,8 +49,10 @@ enum ErrorHandling SolvingQuadraticEquation(struct ModeAndAnswers* ModeAndAnswer
     if (IsFinite(ModeAndAnswersData->Answers[0].Real) && IsFinite(ModeAndAnswersData->Answers[0].Complex)
     && IsFinite(ModeAndAnswersData->Answers[1].Real) && IsFinite(ModeAndAnswersData->Answers[1].Complex))
     {
+        RemoveLogg_();
         return NO_ERRORS;
     }
+    OutputLogg_(ANSWERS_NOT_NUMBER, _LoggFile);
     return ANSWERS_NOT_NUMBER;
 }
 

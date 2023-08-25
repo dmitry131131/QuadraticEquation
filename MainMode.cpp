@@ -8,6 +8,7 @@
 
 #include "config.h"
 #include "StructAndEnums.h"
+#include "Logger.h"
 #include "InputOutput.h"
 #include "Computational.h"
 #include "MainMode.h"
@@ -15,7 +16,9 @@
 
 enum ErrorHandling MainMode(FILE* file)
 {
-    struct ModeAndAnswers ModeAndAnswersData = {INPUT_ERROR, {NAN, NAN, NAN}, {{NAN, NAN}, {NAN, NAN}}};
+    AddLogg();
+
+    struct ModeAndAnswers ModeAndAnswersData = {{{NAN, NAN}, {NAN, NAN}}, {NAN, NAN, NAN}, INPUT_ERROR};
     enum ErrorHandling ErrorCode = NO_ERRORS;
 
     if (!(ErrorCode = Input(ModeAndAnswersData.Coeff, file)))
@@ -27,5 +30,6 @@ enum ErrorHandling MainMode(FILE* file)
         }
     }
 
+    RemoveLogg_();
     return ErrorCode;
 }

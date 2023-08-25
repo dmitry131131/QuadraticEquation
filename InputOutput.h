@@ -35,7 +35,7 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData);
  * Print Error value to stdout
  * @param [in] ErrorCode code of error (enum ErrorHandling)
 */
-void PrintErrorValue(ErrorHandling ErrorCode); 
+void PrintErrorValue(ErrorHandling ErrorCode, FILE* flow); 
 /**
  * Print help information about programm
 */
@@ -47,7 +47,7 @@ void HelpOutput();
  * @param [out] i out function iterator
  * @return file or NULL if file open error
 */
-FILE* OpenFile(const int argc, char* argv[], int* i);
+FILE* OpenFile(const int argc, const char* const argv[], int* i);
 /**
  * Change output color
  * @param [in] color color

@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "StructAndEnums.h"
+#include "Logger.h"
 #include "Test.h"
 #include "InputOutput.h"
 #include "MainMode.h"
@@ -14,6 +15,8 @@
 
 enum ErrorHandling FlagsManager(const int argc, char* argv[])
 {
+    AddLogg();
+
     enum ErrorHandling ErrorCode = NO_ERRORS;
 
     #ifdef RUN_TEST
@@ -35,22 +38,38 @@ enum ErrorHandling FlagsManager(const int argc, char* argv[])
             if (FILE* file = OpenFile(argc, argv, &i))
             {
                 PrintFilename(argv[i + 1], VIOLET);
-                while (!MainMode(file)) {}
+                while (!(ErrorCode = MainMode(file))) {}
+                /*
+                if (!ErrorCode) 
+                {
+                    return ErrorCode;
+                }
+                */
                 i++;
             }
             else
             {   
                 PrintFilename(argv[i + 1], VIOLET);
+                OutputLogg_(FILE_NOT_OPENED, _LoggFile);
                 return FILE_NOT_OPENED;
             }
         }
         else
         {
+            RemoveLogg_();
             return INVALID_CONSOLE_ARG;
         }
     }
 
     #endif
 
-    return ErrorCode;
+    RemoveLogg_();
+    if (ErrorCode == FOUND_EOF_FILE)
+    {
+        return NO_ERRORS;
+    }
+    else
+    {
+        return ErrorCode;
+    }
 }
