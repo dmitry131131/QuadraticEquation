@@ -39,19 +39,18 @@ enum ErrorHandling Tester(const int argc, char* argv[])
             else
             {
                 PrintFilename(argv[i + 1], VIOLET);
-                OutputLogg_(FILE_NOT_OPENED, _LoggFile);
+                PrintErrorValue(FILE_NOT_OPENED, stdout, argv[i + 1]);
+                OutputLogg_(FILE_NOT_OPENED, _LoggFile, argv[i + 1]);
                 return FILE_NOT_OPENED;
             }
         }
         else 
         {
-            RemoveLogg_();
-            return INVALID_CONSOLE_ARG;
+            RETURN(INVALID_CONSOLE_ARG);
         }
     }
 
-    RemoveLogg_();
-    return ErrorCode;
+    RETURN(ErrorCode);
 }
 
 enum ErrorHandling TestMode(FILE* file)
@@ -90,14 +89,12 @@ enum ErrorHandling TestMode(FILE* file)
         }
     }
 
-    RemoveLogg_();
-
     if (ErrorCode == FOUND_EOF_FILE)
     {
-        return NO_ERRORS;
+        RETURN(NO_ERRORS);
     }
     else
     {
-        return ErrorCode;
+        RETURN(ErrorCode);
     }
 }

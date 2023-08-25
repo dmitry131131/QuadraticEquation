@@ -11,11 +11,27 @@
 #include "Logger.h"
 #include "InputOutput.h"
 
+struct LoggElement* _LoggBuffer = LoggBufferInit();
+
+#ifdef _SHOW_LOGG_MESSAGE
+
+FILE* _LoggFile = fopen("logs.txt", "w");
+
+#endif
+
 int i = 0;
 
 struct LoggElement* LoggBufferInit()
 {
+    #ifdef _SHOW_LOGG_MESSAGE
+    
     return (struct LoggElement*) calloc(LOGGER_BUFFER_SIZE, sizeof(LoggElement));
+
+    #else
+
+    return (struct LoggElement*) calloc(0, sizeof(LoggElement));
+
+    #endif
 }
 
 void FreeBuffer(struct LoggElement* BufferName)
@@ -23,7 +39,7 @@ void FreeBuffer(struct LoggElement* BufferName)
     free(BufferName);
 }
 
-void WriteToBuffer(const char* file, const char* function, int line)
+void WriteToBuffer(const char* file, const char* function, const int line)
 {
     strcpy((_LoggBuffer + i)->file, file);
     strcpy((_LoggBuffer + i)->function, function);
@@ -36,9 +52,9 @@ void RemoveLogg()
     i--;
 }
 
-void OutputLogg(enum ErrorHandling ErrorCode, FILE* LoggFile)
+void OutputLogg(enum ErrorHandling ErrorCode, FILE* LoggFile, const char* filename)
 {
-    PrintErrorValue(ErrorCode, LoggFile);
+    PrintErrorValue(ErrorCode, LoggFile, filename);
 
     int j = 0;
 

@@ -30,6 +30,5 @@ enum ErrorHandling MainMode(FILE* file)
         }
     }
 
-    RemoveLogg_();
-    return ErrorCode;
+    RETURN(ErrorCode);
 }

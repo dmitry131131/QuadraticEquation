@@ -34,8 +34,10 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* ModeAndAnswersData);
 /**
  * Print Error value to stdout
  * @param [in] ErrorCode code of error (enum ErrorHandling)
+ * @param [in] flow output flow
+ * @param filename name of opened file
 */
-void PrintErrorValue(ErrorHandling ErrorCode, FILE* flow); 
+void PrintErrorValue(ErrorHandling ErrorCode, FILE* flow, const char* filename); 
 /**
  * Print help information about programm
 */

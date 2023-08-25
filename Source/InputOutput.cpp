@@ -27,9 +27,11 @@ enum ErrorHandling SkipInput(FILE* flow)
 enum ErrorHandling Input(double* Coeff, FILE* file)
 {
     int log = fscanf(file ,"%lf %lf %lf", &Coeff[0], &Coeff[1], &Coeff[2]);
-/*
+
+    #ifndef RUN_TEST
+
     int ch;
-    if ((ch = getc(file)) == 'q') {}
+    if ((ch = getc(file)) == 'q' || (ch == EOF)) {}
 
     else if (ch != '\n') 
     {
@@ -38,7 +40,9 @@ enum ErrorHandling Input(double* Coeff, FILE* file)
     }
 
     ungetc(ch, file);
-*/
+
+    #endif
+
     switch (log)
     {
     case 3:
@@ -101,7 +105,7 @@ enum ErrorHandling ConsoleOutput(struct ModeAndAnswers* const ModeAndAnswersData
     return NO_ERRORS;
 }
 
-void PrintErrorValue(ErrorHandling ErrorCode, FILE* flow)
+void PrintErrorValue(ErrorHandling ErrorCode, FILE* flow, const char* filename)
 {
     ChangeColor(RED);
 
@@ -130,7 +134,7 @@ void PrintErrorValue(ErrorHandling ErrorCode, FILE* flow)
         break;
 
     case FILE_NOT_OPENED:
-        fprintf(flow, "File error: %s\n", _sys_errlist[errno]);
+        fprintf(flow, "File %s error: %s\n", filename, strerror(errno));
         break;
 
     case FILE_INPUT_ERROR:
@@ -142,7 +146,7 @@ void PrintErrorValue(ErrorHandling ErrorCode, FILE* flow)
         break;
 
     case CLOSE_FILE_ERROR:
-        fprintf(flow, "Close file error:  %s\n", _sys_errlist[errno]);
+        fprintf(flow, "File %s close error:  %s\n", filename, strerror(errno));
         break;
 
     case INVALID_CONSOLE_ARG:

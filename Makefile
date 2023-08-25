@@ -1,9 +1,13 @@
 CXX = g++
 CXXFLAGS = -Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wfloat-equal -Winline -Wunreachable-code -Wmissing-declarations -Wmissing-include-dirs -Wswitch-enum -Wswitch-default -Weffc++ -Wmain -Wextra -Wall -g -pipe -fexceptions -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wempty-body -Wformat-security -Wformat=2 -Wignored-qualifiers -Wlogical-op -Wno-missing-field-initializers -Wnon-virtual-dtor -Woverloaded-virtual -Wpointer-arith -Wsign-promo -Wstack-usage=8192 -Wstrict-aliasing -Wstrict-null-sentinel -Wtype-limits -Wwrite-strings -Werror=vla -D_DEBUG -D_EJUDGE_CLIENT_SIDE
 TARGET = Solver.exe
-objects = main.o Computational.o FlagsManager.o InputOutput.o MainMode.o math_utilits.o Test.o
+SourceFolder = Source
+Source = main.cpp Computational.cpp FlagsManager.cpp InputOutput.cpp Logger.cpp math_utilits.cpp Test.cpp MainMode.cpp
+Headers = Computational.h config.h FlagsManager.h InputOutput.h Logger.h MainMode.h math_utilits.h StructAndEnums.h Test.h
+objects = $(Source:.cpp=.o)
 
-buildDir = build
+ggg = $(addprefix $(SourceFolder)\, $(Source))
+hhh = $(addprefix $(SourceFolder)\, $(Headers))
 
 .PHONY : all clean 
 
@@ -15,7 +19,7 @@ $(TARGET) : $(objects)
 main.o : main.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-Computational.o : Computational.cpp
+Computational.o : Computational.cpp 
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 FlagsManager.o : FlagsManager.cpp
@@ -33,16 +37,16 @@ math_utilits.o : math_utilits.cpp
 Test.o : Test.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-rec : main.cpp Computational.cpp FlagsManager.cpp InputOutput.cpp MainMode.cpp math_utilits.cpp Test.cpp
+rec : $(ggg)
 	$(CXX) $(CXXFLAGS) $^ -o $(TARGET)
 
-rec_t : main.cpp Computational.cpp FlagsManager.cpp InputOutput.cpp MainMode.cpp math_utilits.cpp Test.cpp
+rec_t : $(ggg)
 	$(CXX) $(CXXFLAGS) -DRUN_TEST $^ -o $(TARGET)
 
-rec_t_l : main.cpp Computational.cpp FlagsManager.cpp InputOutput.cpp MainMode.cpp math_utilits.cpp Test.cpp Logger.cpp
+rec_t_l : $(ggg)
 	$(CXX) $(CXXFLAGS) -DRUN_TEST -D_SHOW_LOGG_MESSAGE $^ -o $(TARGET)
 
-rec_l : main.cpp Computational.cpp FlagsManager.cpp InputOutput.cpp MainMode.cpp math_utilits.cpp Test.cpp Logger.cpp
+rec_l : $(ggg)
 	$(CXX) $(CXXFLAGS) -D_SHOW_LOGG_MESSAGE $^ -o $(TARGET)
 
 clean :
